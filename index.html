@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>《代号：雾绯》项目投资与立项提案｜女性向乙游 × 轻量级AI互动影游 × 9:16竖屏</title>
+  <meta name="description" content="19世纪工业革命架空伦敦，神秘物质“流火”将执念化为现实。贵族少女闯入欲望构成的无限流副本，与四位神秘男子共同揭开伦敦的黑暗秘密。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=20261027-7" />
+</head>
+<body>
+
+  <!-- 全局氛围背景层：磨砂星盘底图 + 旋转维多利亚钟表罗盘 + 实时流火雾粒子 Canvas -->
+  <div class="ambient-backdrop" aria-hidden="true"></div>
+  <svg class="astrolabe-bg-ring" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="400" cy="400" r="380" stroke="url(#gradRing)" stroke-width="1" stroke-dasharray="6 8"/>
+    <circle cx="400" cy="400" r="330" stroke="url(#gradRing)" stroke-width="1.5"/>
+    <circle cx="400" cy="400" r="265" stroke="url(#gradRing)" stroke-width="1" stroke-dasharray="2 10"/>
+    <circle cx="400" cy="400" r="190" stroke="url(#gradRing)" stroke-width="1"/>
+    <line x1="400" y1="10" x2="400" y2="790" stroke="url(#gradRing)" stroke-width="0.8"/>
+    <line x1="10" y1="400" x2="790" y2="400" stroke="url(#gradRing)" stroke-width="0.8"/>
+    <line x1="124" y1="124" x2="676" y2="676" stroke="url(#gradRing)" stroke-width="0.6"/>
+    <line x1="676" y1="124" x2="124" y2="676" stroke="url(#gradRing)" stroke-width="0.6"/>
+    <defs>
+      <linearGradient id="gradRing" x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
+        <stop offset="0%" stop-color="#F43F5E"/>
+        <stop offset="50%" stop-color="#C084FC"/>
+        <stop offset="100%" stop-color="#818CF8"/>
+      </linearGradient>
+    </defs>
+  </svg>
+  <div class="tech-grid-overlay" aria-hidden="true"></div>
+  <canvas id="mist-canvas" aria-hidden="true"></canvas>
+
+  <!-- 顶部导航栏 -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="#hero" class="brand-identity">
+        <div class="brand-emblem"></div>
+        <div class="brand-title-group">
+          <span class="brand-name">《代号：雾绯》</span>
+          <span class="brand-sub">CODENAME: MIST &amp; CRIMSON · 9:16 OTOME</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#hero" class="active">00 雾绯序幕</a></li>
+        <li><a href="#worldview">01 世界观与主线</a></li>
+        <li><a href="#liuhuo-lab">02 核心设定</a></li>
+        <li><a href="#characters">03 宿命男主设定</a></li>
+        <li><a href="#dungeon-sim">04 养成/抽卡设定</a></li>
+        <li><a href="#market-biz">05 画像与商业化</a></li>
+        <li><a href="#ui-spec">06 界面/玩法参考</a></li>
+      </ul>
+
+      <div class="header-actions">
+        <button class="btn-pill" id="btn-deck-mode" title="使用键盘左右方向键切页汇报">
+          <span>切页 ←/→</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==================================================================
+         00. HERO SECTION (雾绯序幕 · 核心定位与主视觉首屏)
+         ================================================================== -->
+    <section id="hero" class="pitch-section hero-section">
+      <!-- 首页专属背景底图 -->
+      <div class="hero-bg-backdrop" aria-hidden="true"></div>
+
+      <div class="hero-grid">
+        <!-- 左侧：提案核心信息 -->
+        <div class="hero-content">
+          <div class="hero-badges">
+            <span class="badge-tag">🎬 轻量级 AI 互动影游</span>
+            <span class="badge-tag gold">⏳ 19世纪架空伦敦 × 无限流副本 × 规则怪谈</span>
+          </div>
+
+          <h1 class="hero-title">代号：雾绯</h1>
+          <div class="hero-en-sub">CODENAME: MIST &amp; CRIMSON · INTERACTIVE OTOME PITCH DECK</div>
+
+          <!-- 核心体量与定位数据卡 -->
+          <div class="hero-kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-value">9:16<span class="kpi-unit">竖屏</span></div>
+              <div class="kpi-label">轻量化沉浸交互画幅</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">5<span class="kpi-unit">章</span>/45<span class="kpi-unit">集</span></div>
+              <div class="kpi-label">序章+4章</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">180<span class="kpi-unit">MIN</span></div>
+              <div class="kpi-label">30分/章 · 4分/集</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">18-35<span class="kpi-unit">岁</span></div>
+              <div class="kpi-label">00后主导女性向核心受众</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         01. WORLDVIEW & MULTIVERSE (世界观 · 多元无限流时空 · 主线演进脉络)
+         ================================================================== -->
+    <section id="worldview" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">01</span>
+          <span class="section-eyebrow">WORLDVIEW &amp; MULTIVERSE AESTHETIC</span>
+        </div>
+        <p class="section-desc" style="max-width: 980px; font-size: 1.08rem; line-height: 1.85; color: var(--text-primary); margin-top: 14px;">
+          <strong style="color: var(--crimson-soft);">【一句话概括】</strong> 19世纪工业革命时期（架空），一种来自地底的神秘物质<span style="color: var(--crimson-soft); border-bottom: 1px dashed rgba(244,63,94,0.5);">“流火”</span>能够将人类执念变成现实。 <strong>贵族少女</strong>为调查灭门真相，闯入一个个由欲望构成的诡异世界（<strong>副本</strong>），与<strong>四位神秘男子</strong>共同揭开伦敦的黑暗秘密……
+        </p>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 01 主舞台：左侧 REALM 01~04 纵列 + 右侧女主背影无框UI悬浮简介 -->
+      <div class="worldview-stage-layout">
+        <div class="world-Realm-tabs" id="realm-tabs">
+          <div class="realm-static-card">
+            <span class="realm-tab-era">REALM 01 · 主世界基底</span>
+            <div class="realm-tab-name">十九世纪 · 雾都伦敦</div>
+            <div class="realm-tab-sub">工业革命 · 煤矿屠杀案 · 大清洗秩序</div>
+          </div>
+          <div class="realm-static-card">
+            <span class="realm-tab-era">REALM 02 · 无限流副本</span>
+            <div class="realm-tab-name">无限流副本</div>
+            <div class="realm-tab-sub">穿越多元世界完成任务</div>
+          </div>
+          <div class="realm-static-card">
+            <span class="realm-tab-era">REALM 03 · 题材</span>
+            <div class="realm-tab-name">十九世纪、古代、西幻</div>
+            <div class="realm-tab-sub">跨光年偏爱</div>
+          </div>
+          <div class="realm-static-card">
+            <span class="realm-tab-era">REALM 04 · 情感</span>
+            <div class="realm-tab-name">宿命轮回 · 复仇真相</div>
+            <div class="realm-tab-sub">神圣与亵渎 · 荆棘古堡 · 圣子神坛</div>
+          </div>
+        </div>
+
+        <!-- 女主无框UI文字简介（位于右侧女主背面形象左侧、一半文字叠于女主背影之上） -->
+        <div class="heroine-floating-info">
+          <div class="heroine-ui-eyebrow">
+            <span class="heroine-ui-dot">❖</span>
+            <span>HEROINE // 女主（玩家）</span>
+            <span class="heroine-ui-line"></span>
+          </div>
+          <div class="heroine-ui-role">新兴贵女</div>
+          <div class="heroine-ui-line-text">警察隶属于警察的特别行动队</div>
+          <div class="heroine-ui-line-text">专职处理这些<span class="heroine-ui-highlight">“臆想之地”</span></div>
+        </div>
+      </div>
+
+      <!-- 主线五步演进链路 -->
+      <h3 class="mainline-section-heading">
+        ✦ 主线剧情演进脉络
+      </h3>
+
+      <div class="mainline-chain">
+        <div class="chain-step">
+          <div class="chain-num"><span>STEP 01</span><span>导火索</span></div>
+          <div class="chain-title">煤矿屠杀案</div>
+          <p class="chain-text">地底矿脉首次挖出高浓度“流火”原石，惨烈屠杀与贵族少女家族灭门悬案同步爆发，揭开黑暗序幕。</p>
+          <div class="chain-arrow" aria-hidden="true">
+            <svg viewBox="0 0 44 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="arrowGrad1" x1="0" y1="10" x2="44" y2="10" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#C084FC" stop-opacity="0.35" />
+                  <stop offset="55%" stop-color="#F43F5E" />
+                  <stop offset="100%" stop-color="#E5C158" />
+                </linearGradient>
+              </defs>
+              <circle cx="4" cy="10" r="2.5" fill="#F43F5E" />
+              <line x1="6" y1="10" x2="34" y2="10" stroke="url(#arrowGrad1)" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M27 4.5L35.5 10L27 15.5" stroke="#F43F5E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+              <path d="M32 3.5L41.5 10L32 16.5" stroke="#E5C158" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num"><span>STEP 02</span><span>失控蔓延</span></div>
+          <div class="chain-title">流火引发社会危机</div>
+          <p class="chain-text">流火寄生人类形成“臆想主”，执念化作异常空间吞噬街区，伦敦陷入超自然恐慌与阶层撕裂。</p>
+          <div class="chain-arrow" aria-hidden="true">
+            <svg viewBox="0 0 44 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="4" cy="10" r="2.5" fill="#F43F5E" />
+              <line x1="6" y1="10" x2="34" y2="10" stroke="url(#arrowGrad1)" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M27 4.5L35.5 10L27 15.5" stroke="#F43F5E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+              <path d="M32 3.5L41.5 10L32 16.5" stroke="#E5C158" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num"><span>STEP 03</span><span>高压秩序</span></div>
+          <div class="chain-title">议会与教会“大清洗”</div>
+          <p class="chain-text">公爵掌控的议会与圣子效力的教会联合发动铁血“大清洗”，抹杀一切知情者，重建表面上的社会秩序。</p>
+          <div class="chain-arrow" aria-hidden="true">
+            <svg viewBox="0 0 44 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="4" cy="10" r="2.5" fill="#F43F5E" />
+              <line x1="6" y1="10" x2="34" y2="10" stroke="url(#arrowGrad1)" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M27 4.5L35.5 10L27 15.5" stroke="#F43F5E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+              <path d="M32 3.5L41.5 10L32 16.5" stroke="#E5C158" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num"><span>STEP 04</span><span>宿命交汇</span></div>
+          <div class="chain-title">深入调查·邂逅四男主</div>
+          <p class="chain-text">女主孤身闯入一个个“臆想之地”副本搜集灭门线索，先后邂逅四位身份神秘、能力各异的男主。</p>
+          <div class="chain-arrow" aria-hidden="true">
+            <svg viewBox="0 0 44 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="4" cy="10" r="2.5" fill="#F43F5E" />
+              <line x1="6" y1="10" x2="34" y2="10" stroke="url(#arrowGrad1)" stroke-width="2.2" stroke-linecap="round" />
+              <path d="M27 4.5L35.5 10L27 15.5" stroke="#F43F5E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.65" />
+              <path d="M32 3.5L41.5 10L32 16.5" stroke="#E5C158" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+        </div>
+        <div class="chain-step">
+          <div class="chain-num"><span>STEP 05</span><span>情感终局</span></div>
+          <div class="chain-title">试探博弈·信任与深爱</div>
+          <p class="chain-text">从初期的利益交换、相互试探与危险同盟，在生死副本中托付后背，走向独一无二的偏爱、依赖与爱情。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         02. CORE SETTINGS & FLOWING FIRE AI UI LAB (四大核心设定 + 流火AI动态UI实验室)
+         ================================================================== -->
+    <section id="liuhuo-lab" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">02</span>
+          <span class="section-eyebrow">CORE LORE &amp; FLOWING FIRE AI DYNAMIC UI</span>
+        </div>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 四大核心设定卡片（严格对应文档 1~4） -->
+      <div class="lore-4-grid">
+        <div class="lore-card">
+          <div class="lore-index">CORE SETTING 01</div>
+          <div class="lore-name">流火</div>
+          <div class="lore-sub">神秘能量物质 · Crimson Crystal</div>
+          <p class="lore-body">
+            一种来自地底的红色晶体，外形如凝固的火焰。接触人体后会融入体内，通过<strong>吸收情绪</strong>获得能量，并放大宿主内心最强烈的执念。
+          </p>
+        </div>
+        <div class="lore-card">
+          <div class="lore-index">CORE SETTING 02</div>
+          <div class="lore-name">臆想主</div>
+          <div class="lore-sub">被流火寄生之人 · Phantasm Host</div>
+          <p class="lore-body">
+            与流火融合的人类。他们的<strong>情绪和执念会影响周围现实</strong>，形成由自身潜意识主导的异常空间，是每个副本的核心源头。
+          </p>
+        </div>
+        <div class="lore-card">
+          <div class="lore-index">CORE SETTING 03</div>
+          <div class="lore-name">臆想之地</div>
+          <div class="lore-sub">执念形成的异常空间 · Rule Dungeon</div>
+          <p class="lore-body">
+            由臆想主的欲望、恐惧或记忆创造的特殊空间。进入者<strong>必须按照空间设定的身份与规则行动</strong>，否则可能遭到惩罚甚至死亡。
+          </p>
+        </div>
+        <div class="lore-card">
+          <div class="lore-index">CORE SETTING 04</div>
+          <div class="lore-name">锚点</div>
+          <div class="lore-sub">情绪凝结的超凡道具 · Astral Anchor</div>
+          <p class="lore-body">
+            流火吸收情绪后形成的特殊物品。<strong>拥有与其情绪特质匹配的人，可以使用锚点获得超自然能力</strong>，但也可能因排斥而死亡。
+          </p>
+        </div>
+      </div>
+
+      <!-- 流火五种情绪静态图腾展示（无底色透明悬浮） -->
+      <div class="liuhuo-lab-container" id="liuhuo-lab-box">
+        <div class="liuhuo-lab-header">
+          <div class="emotion-selector-bar" id="emotion-buttons">
+            <div class="emotion-orb-btn">
+              <img src="assets/images/spectrum/hongse.png" alt="愤怒·红色" class="emotion-emblem-img" />
+              <span><strong>愤怒</strong> · 红色</span>
+            </div>
+            <div class="emotion-orb-btn">
+              <img src="assets/images/spectrum/heise.png" alt="恐惧·黑色" class="emotion-emblem-img" />
+              <span><strong>恐惧</strong> · 黑色</span>
+            </div>
+            <div class="emotion-orb-btn">
+              <img src="assets/images/spectrum/lvse.png" alt="嫉妒·绿色" class="emotion-emblem-img" />
+              <span><strong>嫉妒</strong> · 绿色</span>
+            </div>
+            <div class="emotion-orb-btn">
+              <img src="assets/images/spectrum/huangse.png" alt="喜悦·黄色" class="emotion-emblem-img" />
+              <span><strong>喜悦</strong> · 黄色</span>
+            </div>
+            <div class="emotion-orb-btn">
+              <img src="assets/images/spectrum/baise.png" alt="哀伤·白色" class="emotion-emblem-img" />
+              <span><strong>哀伤</strong> · 白色</span>
+            </div>
+          </div>
+
+          <div class="emotion-spectrum-caption">
+            <span class="caption-wing left" aria-hidden="true"></span>
+            <p class="caption-text">
+              流火会根据吸收的<span class="heroine-ui-highlight">主要情绪改变颜色</span>，并凝结出<span class="heroine-ui-highlight">不同属性的锚点</span>
+            </p>
+            <span class="caption-wing right" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         03. CHARACTERS MATRIX (四位宿命男主横向高定卡片 + 点击展开深度人物档案详情)
+         ================================================================== -->
+    <section id="characters" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">03</span>
+          <span class="section-eyebrow">HEROINE &amp; FOUR DESTINED MALE LEADS</span>
+        </div>
+        <h2 class="section-title">女主（玩家） 四位宿命男主</h2>
+        <p class="section-desc">
+          女主身兼<strong>新兴贵女与警察特别行动队探员</strong>（专职处理“臆想之地”），在诡谲副本中邂逅四位极致人设男主。
+        </p>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 四位男性角色横向排列高定卡片（上方 9:16 角色专属立绘 + 下方角色简介） -->
+      <div class="char-cards-overview" id="char-cards-overview">
+        <!-- 男主 1：奥古斯特 · 卢西恩 -->
+        <article class="char-vertical-card" data-char="duke">
+          <div class="char-vcard-media">
+            <img src="assets/images/aogusite.jpg" alt="奥古斯特·卢西恩" class="char-vcard-img" />
+          </div>
+          <div class="char-vcard-body">
+            <div class="char-vcard-eyebrow crimson">NO.01 · 吸血鬼公爵</div>
+            <h3 class="char-vcard-title">奥古斯特 · 卢西恩</h3>
+            <p class="char-vcard-summary">
+              <strong class="tag-crimson" style="font-size: 2.15em;">权势型</strong> · 高傲冷峻的议会掌控者，习惯用利益与规则操控全局，私下却有极度反差萌的爱猫癖好。
+            </p>
+            <div class="char-vcard-tags">
+              <span>上位者沦陷</span>
+              <span>权力博弈</span>
+              <span>反差萌撸猫</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 男主 2：伊莱亚 · 艾伯特 -->
+        <article class="char-vertical-card" data-char="saint">
+          <div class="char-vcard-media">
+            <img src="assets/images/yilaiya.jpg" alt="伊莱亚·艾伯特" class="char-vcard-img" />
+          </div>
+          <div class="char-vcard-body">
+            <div class="char-vcard-eyebrow lilac">NO.02 · 教廷圣子</div>
+            <h3 class="char-vcard-title">伊莱亚 · 艾伯特</h3>
+            <p class="char-vcard-summary">
+              <strong class="tag-lilac" style="font-size: 2.15em;">禁欲型</strong> · 被教会培养的无暇“神之容器”与年轻审判官，为守护女主甘愿怀揣私心走下神坛。
+            </p>
+            <div class="char-vcard-tags">
+              <span>神圣与亵渎</span>
+              <span>信仰崩塌</span>
+              <span>女主即信仰</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 男主 3：闻九 -->
+        <article class="char-vertical-card" data-char="broker">
+          <div class="char-vcard-media">
+            <img src="assets/images/weijiu.jpg" alt="闻九" class="char-vcard-img" />
+          </div>
+          <div class="char-vcard-body">
+            <div class="char-vcard-eyebrow gold">NO.03 · 黑市情报官</div>
+            <h3 class="char-vcard-title">闻九</h3>
+            <p class="char-vcard-summary">
+              <strong class="tag-gold" style="font-size: 2.15em;">轻浮役</strong> · 游走欧洲黑市的危险愉悦犯，善用戏剧感译制腔幽默周旋，十句玩笑里藏着赌上性命的真心。
+            </p>
+            <div class="char-vcard-tags">
+              <span>译制腔幽默</span>
+              <span>谎言与真心</span>
+              <span>危险同盟</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 男主 4：维克多 · 尤里 -->
+        <article class="char-vertical-card" data-char="hunter">
+          <div class="char-vcard-media">
+            <img src="assets/images/weikeduo.jpg" alt="维克多·尤里" class="char-vcard-img" />
+          </div>
+          <div class="char-vcard-body">
+            <div class="char-vcard-eyebrow emerald">NO.04 · 赏金猎人</div>
+            <h3 class="char-vcard-title">维克多 · 尤里</h3>
+            <p class="char-vcard-summary">
+              <strong class="tag-emerald" style="font-size: 2.15em;">直球型</strong> · 出身工业下城区的反骨黑皮赏金猎人，嘴欠傲娇却十分纯情，是生死可托的忠犬搭档。
+            </p>
+            <div class="char-vcard-tags">
+              <span>黑皮忠犬</span>
+              <span>嘴硬心软</span>
+              <span>生死搭档</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         04. STORY ARCHITECTURE & 《昨日尚未发生》 9:16 竖屏副本试玩器
+         ================================================================== -->
+    <section id="dungeon-sim" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">04</span>
+          <span class="section-eyebrow">STORY ARCHITECTURE &amp; 9:16 VERTICAL INSTANCE SIMULATOR</span>
+        </div>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 双维核心数值规则（洞察值 × 心契度，严格对齐更新文档） -->
+      <div class="numeric-rules-grid">
+        <div class="numeric-rule-card insight">
+          <div class="numeric-orb insight">
+            <span style="font-size:0.65rem; font-family:var(--font-mono); color:var(--lilac-bright);">INSIGHT</span>
+            <span style="font-size:1.05rem; color:#fff;">洞察值</span>
+          </div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge-tag">🔍 女主成长与破局数值</span>
+              <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--lilac-core);">RULE DEDUCTION &amp; TRUTH</span>
+            </div>
+            <h4 style="font-family:var(--font-serif); font-size:1.22rem; color:#fff; margin-bottom:4px;">
+              洞察值（Insight Value）
+            </h4>
+          </div>
+        </div>
+
+        <div class="numeric-rule-card heartbond">
+          <div class="numeric-orb heartbond">
+            <span style="font-size:0.65rem; font-family:var(--font-mono); color:var(--crimson-soft);">BOND</span>
+            <span style="font-size:1.05rem; color:#fff;">心契度</span>
+          </div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span class="badge-tag crimson">♥ 男主情感与羁绊数值</span>
+              <span style="font-family:var(--font-mono); font-size:0.72rem; color:var(--crimson-soft);">ROMANCE &amp; BIAS RESONANCE</span>
+            </div>
+            <h4 style="font-family:var(--font-serif); font-size:1.22rem; color:#fff; margin-bottom:4px;">
+              心契度（Heart Bond）
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三个竖屏元素展示框（01/02/03 均为实机循环播放 GIF） -->
+      <div id="dungeon-frames" class="dungeon-prototype-grid three-vertical-frames">
+        <!-- 竖屏元素框 01：雾绯动态开场循环演示 -->
+        <div class="vertical-916-frame">
+          <img src="assets/media/20261027-144242.gif" alt="竖屏展示位01 · 雾绯动态演示" class="vertical-frame-img" decoding="async" />
+        </div>
+
+        <!-- 竖屏元素框 02：主界面交互循环演示 -->
+        <div class="vertical-916-frame">
+          <img src="assets/media/20261027-144247.gif" alt="竖屏展示位02 · 主界面实机交互演示" class="vertical-frame-img" decoding="async" />
+        </div>
+
+        <!-- 竖屏元素框 03：抽卡祈愿与数值实机循环演示 -->
+        <div class="vertical-916-frame">
+          <img src="assets/media/20261027-160650.gif" alt="竖屏展示位03 · 抽卡祈愿与数值系统演示" class="vertical-frame-img" decoding="async" />
+        </div>
+      </div>
+
+      <!-- 下方：左侧 9:16《副本》展示图片 + 右侧无底色透明 UI 悬浮副本文本介绍（同 01 页女主信息风格） -->
+      <div id="dungeon-instance" class="dungeon-instance-showcase">
+        <!-- 左侧：9:16《昨日尚未发生》副本实装海报 -->
+        <div class="vertical-916-frame dungeon-instance-frame">
+          <img src="assets/images/20261027-141740.png" alt="副本：其一《昨日尚未发生》9:16视觉海报" class="vertical-frame-img" />
+        </div>
+
+        <!-- 右侧：无框透明底色 UI 副本介绍信息（对齐 01 页 HEROINE // 女主 视觉风格） -->
+        <div class="dungeon-instance-floating-info">
+          <div class="heroine-ui-eyebrow">
+            <span class="heroine-ui-dot">❖</span>
+            <span>INSTANCE // 核心副本设定</span>
+            <span class="heroine-ui-line"></span>
+          </div>
+          <div class="heroine-ui-role">副本：其一《昨日尚未发生》</div>
+          <div class="heroine-ui-line-text">
+            女主与其他玩家进入了一座<span class="heroine-ui-highlight">永远没有明天的城市</span>。
+          </div>
+          <div class="heroine-ui-line-text">
+            这座城市有人将一整天的时间剪成六段，又以错误的顺序重新拼接。
+          </div>
+          <div class="heroine-ui-line-text">
+            玩家正在经历的，实际上是<span class="heroine-ui-highlight">同一天的六个不同时刻</span>。
+          </div>
+          <div class="heroine-ui-line-text">
+            而女主被赋予的副本身份，恰恰是一名<span class="heroine-ui-highlight">早已死在这一天的少女</span>。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         05. USER PERSONA, BENCHMARKS & COMMERCIALIZATION (用户画像 · 玩法闭环 · 竞品对标 · 商业化)
+         ================================================================== -->
+    <section id="market-biz" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">05</span>
+          <span class="section-eyebrow">USER PERSONA, CORE LOOP &amp; MARKET DIFFERENTIATION</span>
+        </div>
+        <h2 class="section-title">核心用户画像、五步玩法闭环与差异化商业壁垒</h2>
+        <p class="section-desc">
+          深度锁定<strong>18-35岁（00后主导）女性向玩家</strong>，针对其追求多元高能剧情、拒绝数值卡关的核心痛点，以<strong>“微恐悬疑推理 + 无限流多元副本 + 氪金排行榜与高定换装”</strong>在市面乙游中建立鲜明护城河。
+        </p>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 核心玩法五步闭环（严格对应文档“核心玩法”） -->
+      <div style="margin-bottom:36px;">
+        <div style="font-family:var(--font-mono); font-size:0.75rem; color:var(--crimson-soft); letter-spacing:0.12em; margin-bottom:8px;">
+          ✦ CORE GAMEPLAY &amp; MONETIZATION LOOP // 核心玩法与商业化
+        </div>
+        <div class="gameplay-loop-bar">
+          <div class="loop-node">
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--lilac-core);">STEP 01</div>
+            <div style="font-family:var(--font-serif); font-size:1.08rem; font-weight:700; color:#fff; margin:4px 0;">体验剧情</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary);">9:16竖屏短剧级主线与无限流副本推理</div>
+          </div>
+          <div class="loop-node">
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--lilac-core);">STEP 02</div>
+            <div style="font-family:var(--font-serif); font-size:1.08rem; font-weight:700; color:#fff; margin:4px 0;">获取资源</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary);">通关/日常万年历/送花入梦产出流火晶石</div>
+          </div>
+          <div class="loop-node" style="border-color:var(--crimson-core);">
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--crimson-soft);">STEP 03 · 核心付费点</div>
+            <div style="font-family:var(--font-serif); font-size:1.08rem; font-weight:700; color:#fff; margin:4px 0;">抽卡养成 &amp; 换装</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary);">抽取男主流火锚点/SSR思念卡面与高定礼服</div>
+          </div>
+          <div class="loop-node">
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--lilac-core);">STEP 04</div>
+            <div style="font-family:var(--font-serif); font-size:1.08rem; font-weight:700; color:#fff; margin:4px 0;">解锁更多剧情/卡面</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary);">开启男主专属入梦私密约会与隐藏真相视角</div>
+          </div>
+          <div class="loop-node">
+            <div style="font-family:var(--font-mono); font-size:0.7rem; color:var(--gold-brass);">STEP 05 · 长线留存</div>
+            <div style="font-family:var(--font-serif); font-size:1.08rem; font-weight:700; color:#fff; margin:4px 0;">多支线结局达成图鉴</div>
+            <div style="font-size:0.78rem; color:var(--text-secondary);">全结局收集 + 魅力羁绊排行榜社交荣耀</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 用户画像星图 + 竞品对标与参考矩阵 -->
+      <div class="persona-benchmark-grid">
+        <!-- 左侧：用户画像（参考无畏契约招商方案图7泡泡图风格） -->
+        <div class="glass-panel">
+          <span class="badge-tag crimson">👩 用户画像 · TARGET AUDIENCE</span>
+          <h3 style="font-family:var(--font-serif); font-size:1.45rem; color:#fff; margin:10px 0 6px;">
+            《代号：雾绯》的核心玩家都是什么样的？
+          </h3>
+          <p style="font-size:0.86rem; color:var(--text-secondary);">
+            性别以<strong>女性主导（乙女游戏爱好者）</strong>，年龄集中在<strong>18-35岁（00后Z世代为主导）</strong>，兼具强情感付费意愿与极高小红书/抖音/B站二创传播力：
+          </p>
+
+          <div class="persona-bubble-stage">
+            <span class="persona-bubble core">👑 18-35岁 00后女性主导</span>
+            <span class="persona-bubble">📚 晋江/番茄无限流网文控</span>
+            <span class="persona-bubble">🕵️ 剧本杀 &amp; 规则怪谈推理迷</span>
+            <span class="persona-bubble">💕 乙游“机制偏爱”吃谷人</span>
+            <span class="persona-bubble">🎨 Q版男主 &amp; 二创同人</span>
+            <span class="persona-bubble">✨ 追求轻松上手·不卡关·低配畅玩</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px;">
+            <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:var(--radius-sm); border-left:2px solid var(--crimson-core);">
+              <div style="font-size:0.75rem; color:var(--crimson-soft); font-weight:700;">直接卖点（Direct Hook）</div>
+              <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">主线剧情高频更新（推进现实线与多元副本线）、特殊主题副本开启。</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03); padding:12px; border-radius:var(--radius-sm); border-left:2px solid var(--lilac-core);">
+              <div style="font-size:0.75rem; color:var(--lilac-bright); font-weight:700;">情感卖点（Emotional Hook）</div>
+              <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">探索与羁绊——在生死副本中体验新奇邂逅，享受男主独一无二的机制偏爱。</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右侧：跨界视听参考 & 三大核心差异化破局点 -->
+        <div class="glass-panel">
+          <span class="badge-tag gold">⚔️ 差异化壁垒 · DIFFERENTIATION</span>
+          <h3 style="font-family:var(--font-serif); font-size:1.45rem; color:#fff; margin:10px 0 12px;">
+            和市面上传统女性向乙游的三大核心区别
+          </h3>
+
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:1.5rem; color:var(--text-secondary); margin-bottom:18px;">
+            <li style="background:rgba(244,63,94,0.09); border:1px solid rgba(244,63,94,0.3); padding:11px 14px; border-radius:10px;">
+              <strong style="color:var(--crimson-soft);">① 极致「美强惨」宿命叙事</strong>
+            </li>
+            <li style="background:rgba(192,132,252,0.09); border:1px solid rgba(192,132,252,0.3); padding:11px 14px; border-radius:10px;">
+              <strong style="color:var(--lilac-bright);">② 微恐 × 悬疑 × 推理 + 都市异象/规则怪谈主线</strong>
+            </li>
+            <li style="background:rgba(229,193,88,0.09); border:1px solid rgba(229,193,88,0.3); padding:11px 14px; border-radius:10px;">
+              <strong style="color:var(--gold-brass);">③ 增添排行榜（氪金消费机制）+ 高定角色换装</strong>
+            </li>
+          </ul>
+
+          <div style="background:rgba(255,255,255,0.03); border:1px dashed var(--border-bright); border-radius:var(--radius-sm); padding:14px;">
+            <div style="font-size:0.76rem; color:var(--lilac-bright); font-weight:700; margin-bottom:6px;">
+              ❖ 灵感参考（GENRE REFERENCES）
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:0.8rem; color:var(--text-secondary);">
+              <div>• <strong style="color:#fff;">《重返未来：1999》</strong></div>
+              <div>• <strong style="color:#fff;">《女神异闻录5 (P5)》</strong></div>
+              <div>• <strong style="color:#fff;">《铁甲城的卡巴内瑞》</strong></div>
+              <div>• <strong style="color:#fff;">《假面骑士ZZZ》</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 市场标杆对标海报矩阵（展示更新文档内4大标杆项目官方海报） -->
+      <div class="benchmark-posters-showcase">
+        <div style="margin-bottom:18px;">
+          <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--gold-brass); letter-spacing:0.14em;">
+            ✦ MARKET BENCHMARK GALLERY
+          </span>
+          <h3 style="font-family:var(--font-serif); font-size:1.55rem; color:#fff; margin-top:4px;">
+            四大市面标杆乙游深度对标：汲取成熟商业范式，打造“无限流规则怪谈+美强惨”差异化爆款
+          </h3>
+        </div>
+
+        <div class="benchmark-posters-grid">
+          <!-- 对标 1：恋与深空 -->
+          <div class="bench-poster-card">
+            <div class="bench-poster-media">
+              <img src="assets/images/bench-lysk.jpg" alt="《恋与深空》对标海报" />
+            </div>
+            <div class="bench-poster-body">
+              <div class="bench-game-title">
+                <span>《恋与深空》</span>
+                <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--lilac-core);">3D 沉浸演出</span>
+              </div>
+              <p class="bench-game-desc">
+                行业 9:16 竖屏 3D 近距离交互天花板，验证了高规格 3D 建模与强戏剧张力 CG 对 00 后女性用户的极致吸金能力。
+              </p>
+            </div>
+          </div>
+
+          <!-- 对标 2：光与夜之恋 -->
+          <div class="bench-poster-card">
+            <div class="bench-poster-media">
+              <img src="assets/images/bench-gyyzl.jpg" alt="《光与夜之恋》对标海报" />
+            </div>
+            <div class="bench-poster-body">
+              <div class="bench-game-title">
+                <span>《光与夜之恋》</span>
+                <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--gold-brass);">高定群像生态</span>
+              </div>
+              <p class="bench-game-desc">
+                以顶级时尚华服审美、鲜明男主群像与高粘性二创/周边谷子生态，稳居长线运营与商业化变现前列。
+              </p>
+            </div>
+          </div>
+
+          <!-- 对标 3：世界之外 -->
+          <div class="bench-poster-card">
+            <div class="bench-poster-media">
+              <img src="assets/images/bench-sjzw.png" alt="《世界之外》对标海报" />
+            </div>
+            <div class="bench-poster-body">
+              <div class="bench-game-title">
+                <span>《世界之外》</span>
+                <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--crimson-soft);">无限流轮回</span>
+              </div>
+              <p class="bench-game-desc">
+                开创女性向“无限流快穿副本”先河，凭借多元世界身份扮演与男主“机制偏爱”成功破圈大量网文与泛娱乐受众。
+              </p>
+            </div>
+          </div>
+
+          <!-- 对标 4：夜幕之下 -->
+          <div class="bench-poster-card">
+            <div class="bench-poster-media">
+              <img src="assets/images/bench-ymzx.png" alt="《夜幕之下》对标海报" />
+            </div>
+            <div class="bench-poster-body">
+              <div class="bench-game-title">
+                <span>《夜幕之下》</span>
+                <span style="font-size:0.72rem; font-family:var(--font-mono); color:var(--lilac-bright);">暗黑微恐张力</span>
+              </div>
+              <p class="bench-game-desc">
+                主打暗黑危险关系、电影胶片质感与极致疯批/愉悦犯人设，精准切中年轻女性对“高危禁忌感”与“美强惨”的审美升级。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         06. INTERFACE & GAMEPLAY REFERENCES (【界面/玩法参考】· 四大核心参考玩法)
+         ================================================================== -->
+    <section id="ui-spec" class="pitch-section">
+      <div class="section-frosted-bg" aria-hidden="true"></div>
+      <div class="section-header">
+        <div class="section-index-wrap">
+          <span class="section-num">06</span>
+          <span class="section-eyebrow">BESPOKE UI/UX VISUAL IDENTITY &amp; 9:16 HUD ARCHITECTURE</span>
+        </div>
+        <h3 class="section-subtitle-bold">界面/玩法参考</h3>
+        <div class="astral-divider"></div>
+      </div>
+
+      <!-- 四种参考玩法横向平列矩阵（GIF自动循环播放演示，点击可放大检视） -->
+      <div class="gameplay-ref-bento">
+        <!-- 玩法 01 -->
+        <article class="gp-ref-card" data-lightbox-src="assets/media/wanfajizhi-1.gif" data-lightbox-title="GAMEPLAY 01 · 通过在固定的格子内拼凑场景、人物达到正确叙事">
+          <div class="gp-ref-media">
+            <span class="gp-ref-index crimson">GAMEPLAY 01 · 叙事拼图</span>
+            <img src="assets/media/wanfajizhi-1.gif" alt="通过在固定的格子内拼凑场景、人物达到正确叙事" />
+            <div class="gp-ref-zoom-hint">🔍 点击放大</div>
+          </div>
+          <div class="gp-ref-body">
+            <div class="gp-ref-row">
+              <span class="gp-ref-label crimson">✦ 玩法机制</span>
+              <h4 class="gp-ref-title">通过在固定的格子内拼凑场景、人物达到正确叙事</h4>
+            </div>
+          </div>
+        </article>
+
+        <!-- 玩法 02 -->
+        <article class="gp-ref-card" data-lightbox-src="assets/media/wanfajizhi-2.gif" data-lightbox-title="GAMEPLAY 02 · 通过剧情中的线索，在界面上填入正确关键词">
+          <div class="gp-ref-media">
+            <span class="gp-ref-index lilac">GAMEPLAY 02 · 线索填空推理</span>
+            <img src="assets/media/wanfajizhi-2.gif" alt="通过剧情中的线索，在界面上填入正确关键词" />
+            <div class="gp-ref-zoom-hint">🔍 点击放大</div>
+          </div>
+          <div class="gp-ref-body">
+            <div class="gp-ref-row">
+              <span class="gp-ref-label lilac">✦ 玩法机制</span>
+              <h4 class="gp-ref-title">通过剧情中的线索，在界面上填入正确关键词</h4>
+            </div>
+          </div>
+        </article>
+
+        <!-- 玩法 03 -->
+        <article class="gp-ref-card" data-lightbox-src="assets/media/wanfajizhi-3.gif" data-lightbox-title="GAMEPLAY 03 · 通过发射弹珠击打怪物，保证弹珠不掉落，怪物死亡获得胜利">
+          <div class="gp-ref-media">
+            <span class="gp-ref-index gold">GAMEPLAY 03 · 弹珠击杀闯关</span>
+            <img src="assets/media/wanfajizhi-3.gif" alt="通过发射弹珠击打怪物，保证弹珠不掉落，怪物死亡获得胜利" />
+            <div class="gp-ref-zoom-hint">🔍 点击放大</div>
+          </div>
+          <div class="gp-ref-body">
+            <div class="gp-ref-row">
+              <span class="gp-ref-label gold">✦ 玩法机制</span>
+              <h4 class="gp-ref-title">通过发射弹珠击打怪物，保证弹珠不掉落，怪物死亡获得胜利</h4>
+            </div>
+          </div>
+        </article>
+
+        <!-- 玩法 04 -->
+        <article class="gp-ref-card" data-lightbox-src="assets/media/wanfajizhi-4.gif" data-lightbox-title="GAMEPLAY 04 · 通过挪动不同内容的漫画格子，达成正确顺序">
+          <div class="gp-ref-media">
+            <span class="gp-ref-index lilac">GAMEPLAY 04 · 漫画分镜重组</span>
+            <img src="assets/media/wanfajizhi-4.gif" alt="通过挪动不同内容的漫画格子，达成正确顺序" />
+            <div class="gp-ref-zoom-hint">🔍 点击放大</div>
+          </div>
+          <div class="gp-ref-body">
+            <div class="gp-ref-row">
+              <span class="gp-ref-label lilac">✦ 玩法机制</span>
+              <h4 class="gp-ref-title">通过挪动不同内容的漫画格子，达成正确顺序</h4>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- 玩法机制 GIF 放大预览灯箱 -->
+      <div class="gp-lightbox-modal" id="gp-lightbox" hidden>
+        <div class="gp-lightbox-backdrop" id="gp-lightbox-backdrop"></div>
+        <div class="gp-lightbox-dialog">
+          <button type="button" class="gp-lightbox-close" id="gp-lightbox-close">✕ 关闭预览</button>
+          <img id="gp-lightbox-img" src="assets/media/wanfajizhi-1.gif" alt="玩法机制动态演示" />
+          <div class="gp-lightbox-meta">
+            <div id="gp-lightbox-title" class="gp-lightbox-title"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand-name" style="font-size:1.25rem;">《代号：雾绯》 CODENAME: MIST &amp; CRIMSON</div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:4px;">
+          女性向乙游 × 轻量级AI互动影游 × 9:16竖屏画幅｜杭州红手印传媒科技有限公司
+        </p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="#hero" class="btn-pill">↑ 返回顶部 (Space)</a>
+        <button class="btn-pill primary" onclick="window.print()">⬇ 打印 / 导出 PDF</button>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
