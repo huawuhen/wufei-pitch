@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initDungeonSimulator();
   initGameplayLightbox();
   initDeckNavigation();
+  initMobileExperience();
 });
 
 /* ==========================================================================
@@ -419,4 +420,121 @@ function initGameplayLightbox() {
       closeModal();
     }
   });
+}
+
+/* ==========================================================================
+   9. Mobile-First Interactivity (移动端专属交互增强)
+   ========================================================================== */
+function initMobileExperience() {
+  // A. 移动端悬浮底栏双向同步与平滑滚动
+  const mobileNav = document.getElementById('mobile-bottom-nav');
+  if (mobileNav) {
+    const navItems = mobileNav.querySelectorAll('.mobile-nav-item');
+    const sections = Array.from(navItems)
+      .map((item) => {
+        const secId = item.getAttribute('href').replace('#', '');
+        return document.getElementById(secId);
+      })
+      .filter(Boolean);
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        const scrollPos = window.scrollY + window.innerHeight * 0.35;
+        sections.forEach((sec, idx) => {
+          if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+            navItems.forEach((b) => b.classList.remove('active'));
+            if (navItems[idx]) navItems[idx].classList.add('active');
+          }
+        });
+      },
+      { passive: true }
+    );
+
+    navItems.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = item.getAttribute('href');
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  // B. 03 宿命男主移动端画廊分段器与指示点联动
+  const charTabs = document.querySelectorAll('.mobile-char-tab');
+  const charOverview = document.getElementById('char-cards-overview');
+  const charDots = document.querySelectorAll('#char-carousel-indicator .m-dot');
+
+  if (charOverview && charTabs.length > 0) {
+    const cards = charOverview.querySelectorAll('.char-vertical-card');
+
+    charTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const idx = Number(tab.dataset.charIdx || 0);
+        charTabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+        if (cards[idx]) {
+          cards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+        if (charDots[idx]) {
+          charDots.forEach((d) => d.classList.remove('active'));
+          charDots[idx].classList.add('active');
+        }
+      });
+    });
+
+    charOverview.addEventListener(
+      'scroll',
+      () => {
+        const scrollLeft = charOverview.scrollLeft;
+        const cardWidth = cards[0]?.offsetWidth || 280;
+        const activeIdx = Math.round(scrollLeft / (cardWidth + 14));
+        if (charTabs[activeIdx]) {
+          charTabs.forEach((t) => t.classList.remove('active'));
+          charTabs[activeIdx].classList.add('active');
+        }
+        if (charDots[activeIdx]) {
+          charDots.forEach((d) => d.classList.remove('active'));
+          charDots[activeIdx].classList.add('active');
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  // C. 04 三联实机框移动端滑动分段器
+  const framePills = document.querySelectorAll('#mobile-frame-pills .m-frame-pill');
+  const framesContainer = document.getElementById('dungeon-frames');
+
+  if (framesContainer && framePills.length > 0) {
+    const frames = framesContainer.querySelectorAll('.vertical-916-frame');
+
+    framePills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const idx = Number(pill.dataset.frameIdx || 0);
+        framePills.forEach((p) => p.classList.remove('active'));
+        pill.classList.add('active');
+        if (frames[idx]) {
+          frames[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+
+    framesContainer.addEventListener(
+      'scroll',
+      () => {
+        const scrollLeft = framesContainer.scrollLeft;
+        const frameWidth = frames[0]?.offsetWidth || 280;
+        const activeIdx = Math.round(scrollLeft / (frameWidth + 14));
+        if (framePills[activeIdx]) {
+          framePills.forEach((p) => p.classList.remove('active'));
+          framePills[activeIdx].classList.add('active');
+        }
+      },
+      { passive: true }
+    );
+  }
 }

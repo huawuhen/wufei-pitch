@@ -2967,7 +2967,19 @@ main {
   gap: 24px;
 }
 
-/* Responsive Breakpoints */
+/* ==========================================================================
+   Mobile-First & High-End Responsive Architecture (移动端高定体验优先规范)
+   ========================================================================== */
+
+/* 移动端专属组件基础（桌面端默认隐藏） */
+.mobile-bottom-nav,
+.mobile-char-tabs,
+.mobile-carousel-indicator,
+.mobile-frame-pills {
+  display: none;
+}
+
+/* 平板 & 中屏适配 (<= 1080px) */
 @media (max-width: 1080px) {
   .hero-grid,
   .realm-showcase-panel,
@@ -3014,27 +3026,570 @@ main {
   }
 }
 
-@media (max-width: 640px) {
-  .hero-kpi-grid,
-  .lore-4-grid,
-  .world-Realm-tabs,
-  .char-cards-overview,
-  .mainline-chain,
-  .chapter-5-strip,
-  .gameplay-loop-bar,
-  .clock-slices-grid,
-  .char-interactive-bars,
-  .benchmark-posters-grid,
-  .gameplay-ref-bento {
-    grid-template-columns: 1fr;
-  }
+/* 移动端体验优先主断点 (<= 860px) */
+@media (max-width: 860px) {
+  /* 页面内边距：底部预留悬浮胶囊底栏空间 */
   .pitch-section {
-    padding: 64px 18px;
+    padding: 52px 16px 88px !important;
+  }
+  .site-footer {
+    padding: 36px 16px 104px !important;
+  }
+
+  /* 顶部导航瘦身与微调 */
+  .site-header {
+    height: 58px;
+  }
+  .header-inner {
+    padding: 0 16px;
+  }
+  .brand-sub {
+    display: none;
+  }
+  .brand-name {
+    font-size: 1.02rem;
+  }
+  #btn-deck-mode {
+    display: none !important;
+  }
+  .mobile-gh-btn {
+    padding: 6px 14px;
+    font-size: 0.75rem;
+  }
+
+  /* 移动端悬浮毛玻璃底栏 */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    left: 12px;
+    right: 12px;
+    height: 54px;
+    z-index: 999;
+    background: rgba(14, 10, 32, 0.88);
+    backdrop-filter: blur(24px) saturate(190%);
+    -webkit-backdrop-filter: blur(24px) saturate(190%);
+    border: 1px solid rgba(192, 132, 252, 0.28);
+    border-radius: 999px;
+    box-shadow:
+      0 16px 40px rgba(0, 0, 0, 0.82),
+      0 0 24px rgba(244, 63, 94, 0.18);
+    align-items: center;
+    justify-content: space-around;
+    padding: 4px 6px;
+  }
+
+  .mobile-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    text-decoration: none;
+    color: var(--text-muted);
+    padding: 4px 10px;
+    border-radius: 999px;
+    transition: all 0.22s var(--ease-out-expo);
+    flex: 1;
+    max-width: 58px;
+  }
+
+  .mobile-nav-item .m-nav-icon {
+    font-size: 0.92rem;
+    line-height: 1;
+    filter: grayscale(0.4);
+    transition: transform 0.22s ease, filter 0.22s ease;
+  }
+
+  .mobile-nav-item .m-nav-label {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .mobile-nav-item.active {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(244, 63, 94, 0.28), rgba(168, 85, 247, 0.25));
+    border: 1px solid rgba(244, 63, 94, 0.45);
+    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+  }
+
+  .mobile-nav-item.active .m-nav-icon {
+    filter: grayscale(0);
+    transform: scale(1.15);
+  }
+}
+
+/* 手机竖屏高定优化 (<= 640px) */
+@media (max-width: 640px) {
+  /* 00. HERO 首页 */
+  .hero-section {
+    min-height: 100svh;
+    padding-top: 72px !important;
+    padding-bottom: 24px !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-badges {
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 12px;
+    width: 100%;
+  }
+
+  .hero-badges .badge-tag {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.1rem, 9.5vw, 2.7rem) !important;
+    top: 0 !important;
+    margin-bottom: 4px !important;
+    letter-spacing: 0.08em;
+  }
+
+  .hero-en-sub {
+    font-size: 0.62rem !important;
+    letter-spacing: 0.1em !important;
+    top: 0 !important;
+    margin-bottom: 20px !important;
+    opacity: 0.85;
+  }
+
+  /* 2x2 黄金比例体量指标卡片，避免竖向堆叠遮挡背景题字 */
+  .hero-kpi-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 360px !important;
+    margin: 0 auto !important;
+    top: 0 !important;
+    left: 0 !important;
+  }
+
+  .hero-kpi-grid .kpi-card {
+    padding: 10px 12px !important;
+    border-radius: 14px !important;
+    text-align: center !important;
+    background: rgba(14, 10, 32, 0.72) !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(192, 132, 252, 0.22) !important;
+  }
+
+  .hero-kpi-grid .kpi-value {
+    font-size: 1.25rem !important;
+  }
+
+  .hero-kpi-grid .kpi-label {
+    font-size: 0.68rem !important;
+    margin-top: 2px !important;
+    color: var(--text-muted) !important;
+  }
+
+  /* 01. WORLDVIEW 世界观 */
+  .world-Realm-tabs {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .world-realm-tab {
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .heroine-floating-info {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 16px 18px !important;
+    background: rgba(14, 10, 32, 0.86) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(192, 132, 252, 0.28) !important;
+    border-radius: 16px !important;
+    margin: 12px 0 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  /* 主线链路转为移动端流畅横向滑动手势轴 */
+  .mainline-chain {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 12px !important;
+    padding: 4px 4px 16px !important;
+    width: 100% !important;
+  }
+
+  .mainline-chain .chain-step {
+    width: 78vw !important;
+    max-width: 290px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    margin: 0 !important;
+    border-radius: 16px !important;
+  }
+
+  /* 02. CORE SETTINGS & 流火情绪实验室 */
+  .lore-4-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .lore-card {
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+  }
+
+  .lore-card h3 {
+    font-size: 1.12rem !important;
+    margin: 6px 0 4px !important;
+  }
+
+  .lore-card p {
+    font-size: 0.76rem !important;
+    line-height: 1.55 !important;
+  }
+
+  /* 五种情绪图章等分一排，自适应微型图标不换行 */
+  .emotion-selector-bar {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin-top: 18px !important;
+  }
+
+  .emotion-orb-btn {
+    padding: 4px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 3px !important;
+  }
+
+  .emotion-emblem-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+
+  .emotion-orb-btn span {
+    font-size: 0.64rem !important;
+    white-space: nowrap !important;
+    letter-spacing: 0 !important;
+  }
+
+  .emotion-spectrum-caption {
+    margin-top: 14px !important;
+    gap: 8px !important;
+  }
+
+  .emotion-spectrum-caption .caption-wing {
+    max-width: 32px !important;
+  }
+
+  .emotion-spectrum-caption .caption-text {
+    font-size: 0.85rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 03. CHARACTERS 男主矩阵：移动端画廊手势滑动与分段器 */
+  .mobile-char-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4px 2px 12px;
+    margin-bottom: 6px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .mobile-char-tab {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+  }
+
+  .mobile-char-tab.active {
+    background: linear-gradient(135deg, var(--crimson-core), var(--lilac-core));
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+  }
+
+  .char-cards-overview {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 4px 12px 14px !important;
+    width: 100% !important;
+  }
+
+  .char-vertical-card {
+    width: 78vw !important;
+    max-width: 295px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: center !important;
+    margin: 0 !important;
+    border-radius: 20px !important;
+  }
+
+  .char-vcard-media {
+    height: 380px !important;
+  }
+
+  .mobile-carousel-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .mobile-carousel-indicator .m-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    transition: all 0.25s ease;
+  }
+
+  .mobile-carousel-indicator .m-dot.active {
+    width: 20px;
+    border-radius: 999px;
+    background: var(--crimson-core);
+    box-shadow: 0 0 10px var(--crimson-core);
+  }
+
+  /* 04. STORY & 3联实机展示屏：移动端全景画幅手势滑动 */
+  .numeric-rules-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .numeric-rule-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    padding: 14px 12px !important;
+    gap: 6px !important;
+    border-radius: 14px !important;
+    background: linear-gradient(145deg, rgba(26, 18, 54, 0.95), rgba(13, 9, 30, 0.98)) !important;
+  }
+
+  .numeric-rule-card .numeric-orb {
+    display: none !important;
+  }
+
+  .numeric-rule-card .badge-tag {
+    display: inline-block !important;
+    font-size: 0.64rem !important;
+    padding: 3px 8px !important;
+    border-radius: 6px !important;
+    margin-bottom: 4px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+
+  .numeric-rule-card h4 {
+    font-size: 0.96rem !important;
+    margin: 0 !important;
+    line-height: 1.35 !important;
+    white-space: nowrap !important;
+    color: #fff !important;
+  }
+
+  .numeric-rule-card [style*="font-family:var(--font-mono)"] {
+    display: none !important;
+  }
+
+  /* 三联实机框在移动端升级为原生横向滑动 Showcase，保证 100% 清晰度 */
+  .dungeon-prototype-grid.three-vertical-frames {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 14px !important;
+    padding: 6px 12px 14px !important;
+    width: 100% !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  .dungeon-prototype-grid.three-vertical-frames .vertical-916-frame {
+    width: 76vw !important;
+    max-width: 285px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: center !important;
+    aspect-ratio: 9 / 18.2 !important;
+  }
+
+  .mobile-frame-pills {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin: 4px 0 24px;
+    width: 100%;
+  }
+
+  .mobile-frame-pills .m-frame-pill {
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.22s ease;
+  }
+
+  .mobile-frame-pills .m-frame-pill.active {
+    background: linear-gradient(135deg, var(--crimson-core), var(--lilac-core));
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+  }
+
+  .dungeon-instance-showcase {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    margin-top: 24px !important;
+  }
+
+  .dungeon-instance-frame {
+    max-width: 250px !important;
+    margin: 0 auto !important;
+  }
+
+  .dungeon-instance-floating-info {
+    text-align: left !important;
+    background: rgba(18, 12, 42, 0.65) !important;
+    border: 1px solid rgba(192, 132, 252, 0.22) !important;
+    border-radius: 16px !important;
+    padding: 16px 14px !important;
+    backdrop-filter: blur(12px) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .dungeon-instance-floating-info .heroine-ui-eyebrow {
+    justify-content: flex-start !important;
+  }
+
+  /* 05. MARKET & 商业化五步闭环 */
+  .gameplay-loop-bar {
+    display: flex !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 10px !important;
+    padding: 4px 4px 14px !important;
+  }
+
+  .gameplay-loop-bar .loop-node {
+    width: 70vw !important;
+    max-width: 260px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    border-radius: 14px !important;
+  }
+
+  .benchmark-posters-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .benchmark-poster-card {
+    border-radius: 12px !important;
+  }
+
+  /* 06. GAMEPLAY 玩法与界面参考 */
+  .gameplay-ref-bento {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .gp-ref-card {
+    border-radius: 14px !important;
+  }
+
+  .gp-ref-title {
+    font-size: 0.76rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .gp-ref-label {
+    font-size: 0.65rem !important;
+  }
+
+  /* Lightbox 弹窗移动端沉浸体验 */
+  .gp-lightbox-modal {
+    padding: 12px !important;
+  }
+
+  .gp-lightbox-dialog {
+    padding: 12px !important;
+    border-radius: 16px !important;
+  }
+
+  .gp-lightbox-close {
+    top: 18px !important;
+    right: 18px !important;
+    padding: 5px 12px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* 通用排版调整 */
+  .section-header {
+    margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: clamp(1.4rem, 6vw, 1.85rem) !important;
+  }
+
+  .section-desc {
+    font-size: 0.85rem !important;
   }
 }
 
 @media print {
   .site-header,
+  .mobile-bottom-nav,
   #mist-canvas,
   .astrolabe-bg-ring {
     display: none !important;

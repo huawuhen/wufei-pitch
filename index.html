@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261027-7" />
+  <link rel="stylesheet" href="css/style.css?v=20261028-2" />
 </head>
 <body>
 
@@ -59,6 +59,9 @@
         <button class="btn-pill" id="btn-deck-mode" title="使用键盘左右方向键切页汇报">
           <span>切页 ←/→</span>
         </button>
+        <a href="https://github.com/huawuhen/wufei-pitch" target="_blank" rel="noopener" class="btn-pill primary mobile-gh-btn" title="查看 GitHub 仓库">
+          <span>GitHub</span>
+        </a>
       </div>
     </div>
   </header>
@@ -335,6 +338,14 @@
         <div class="astral-divider"></div>
       </div>
 
+      <!-- 移动端专属男主快速切换分段器 -->
+      <div class="mobile-char-tabs" id="mobile-char-tabs" aria-label="宿命男主快速切换">
+        <button type="button" class="mobile-char-tab active" data-char-idx="0">奥古斯特</button>
+        <button type="button" class="mobile-char-tab" data-char-idx="1">伊莱亚</button>
+        <button type="button" class="mobile-char-tab" data-char-idx="2">闻九</button>
+        <button type="button" class="mobile-char-tab" data-char-idx="3">维克多</button>
+      </div>
+
       <!-- 四位男性角色横向排列高定卡片（上方 9:16 角色专属立绘 + 下方角色简介） -->
       <div class="char-cards-overview" id="char-cards-overview">
         <!-- 男主 1：奥古斯特 · 卢西恩 -->
@@ -413,6 +424,14 @@
           </div>
         </article>
       </div>
+
+      <!-- 移动端滑动画廊指示器 -->
+      <div class="mobile-carousel-indicator" id="char-carousel-indicator">
+        <span class="m-dot active"></span>
+        <span class="m-dot"></span>
+        <span class="m-dot"></span>
+        <span class="m-dot"></span>
+      </div>
     </section>
 
     <!-- ==================================================================
@@ -479,6 +498,13 @@
         <div class="vertical-916-frame">
           <img src="assets/media/20261027-160650.gif" alt="竖屏展示位03 · 抽卡祈愿与数值系统演示" class="vertical-frame-img" decoding="async" />
         </div>
+      </div>
+
+      <!-- 移动端三联实机展示滑动分段标签 -->
+      <div class="mobile-frame-pills" id="mobile-frame-pills" aria-label="实机展示位切换">
+        <button type="button" class="m-frame-pill active" data-frame-idx="0">✦ 01 开场题字</button>
+        <button type="button" class="m-frame-pill" data-frame-idx="1">✦ 02 交互主界面</button>
+        <button type="button" class="m-frame-pill" data-frame-idx="2">✦ 03 抽卡祈愿</button>
       </div>
 
       <!-- 下方：左侧 9:16《副本》展示图片 + 右侧无底色透明 UI 悬浮副本文本介绍（同 01 页女主信息风格） -->
@@ -814,6 +840,38 @@
       </div>
     </div>
   </footer>
+
+  <!-- 移动端专属悬浮毛玻璃导航底栏 -->
+  <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="移动端快速导航">
+    <a href="#hero" class="mobile-nav-item active" data-section="hero">
+      <span class="m-nav-icon">✦</span>
+      <span class="m-nav-label">序幕</span>
+    </a>
+    <a href="#worldview" class="mobile-nav-item" data-section="worldview">
+      <span class="m-nav-icon">❖</span>
+      <span class="m-nav-label">世界</span>
+    </a>
+    <a href="#liuhuo-lab" class="mobile-nav-item" data-section="liuhuo-lab">
+      <span class="m-nav-icon">🔮</span>
+      <span class="m-nav-label">流火</span>
+    </a>
+    <a href="#characters" class="mobile-nav-item" data-section="characters">
+      <span class="m-nav-icon">👑</span>
+      <span class="m-nav-label">男主</span>
+    </a>
+    <a href="#dungeon-sim" class="mobile-nav-item" data-section="dungeon-sim">
+      <span class="m-nav-icon">📱</span>
+      <span class="m-nav-label">实机</span>
+    </a>
+    <a href="#market-biz" class="mobile-nav-item" data-section="market-biz">
+      <span class="m-nav-icon">📊</span>
+      <span class="m-nav-label">商业</span>
+    </a>
+    <a href="#ui-spec" class="mobile-nav-item" data-section="ui-spec">
+      <span class="m-nav-icon">🎮</span>
+      <span class="m-nav-label">玩法</span>
+    </a>
+  </nav>
 
   <script src="js/main.js"></script>
 </body>
