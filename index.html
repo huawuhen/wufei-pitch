@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600;700;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261028-4" />
+  <link rel="stylesheet" href="css/style.css?v=20261030-1" />
 </head>
 <body>
 
@@ -74,12 +74,16 @@
       <div class="hero-grid">
         <!-- 左侧：提案核心信息 -->
         <div class="hero-content">
-          <div class="hero-badges">
-            <span class="badge-tag">🎬 轻量级 AI 互动影游</span>
-            <span class="badge-tag gold">⏳ 19世纪架空伦敦 × 无限流副本 × 规则怪谈</span>
+          <div class="hero-lead-group">
+            <div class="hero-badges">
+              <span class="badge-tag">🎬 轻量级 AI 互动影游</span>
+              <span class="badge-tag gold">⏳ 19世纪架空伦敦 × 无限流副本 × 规则怪谈</span>
+            </div>
+            <h1 class="hero-title">
+              <span class="hero-title-char char-wu">雾</span>
+              <span class="hero-title-char char-fei">绯</span>
+            </h1>
           </div>
-
-          <h1 class="hero-title">雾绯</h1>
 
           <!-- 核心体量与定位数据卡 -->
           <div class="hero-kpi-grid">
@@ -492,7 +496,7 @@
 
       <!-- 移动端三联实机展示滑动分段标签 -->
       <div class="mobile-frame-pills" id="mobile-frame-pills" aria-label="实机展示位切换">
-        <button type="button" class="m-frame-pill active" data-frame-idx="0">✦ 01 开场题字</button>
+        <button type="button" class="m-frame-pill active" data-frame-idx="0">✦ 01 开篇演示</button>
         <button type="button" class="m-frame-pill" data-frame-idx="1">✦ 02 交互主界面</button>
         <button type="button" class="m-frame-pill" data-frame-idx="2">✦ 03 抽卡祈愿</button>
       </div>
@@ -511,7 +515,10 @@
             <span>核心副本设定</span>
             <span class="heroine-ui-line"></span>
           </div>
-          <div class="heroine-ui-role">副本：其一《昨日尚未发生》</div>
+          <div class="heroine-ui-role dungeon-ui-title">
+            <span class="dungeon-title-prefix">副本：其一</span>
+            <span class="dungeon-title-name">《昨日尚未发生》</span>
+          </div>
           <div class="heroine-ui-line-text">
             女主与其他玩家进入了一座<span class="heroine-ui-highlight">永远没有明天的城市</span>。
           </div>
@@ -840,8 +847,8 @@
       <span class="m-nav-label">世界</span>
     </a>
     <a href="#liuhuo-lab" class="mobile-nav-item" data-section="liuhuo-lab">
-      <span class="m-nav-icon">🔮</span>
-      <span class="m-nav-label">流火</span>
+      <span class="m-nav-icon">⚙️</span>
+      <span class="m-nav-label">设定</span>
     </a>
     <a href="#characters" class="mobile-nav-item" data-section="characters">
       <span class="m-nav-icon">👑</span>
@@ -849,7 +856,7 @@
     </a>
     <a href="#dungeon-sim" class="mobile-nav-item" data-section="dungeon-sim">
       <span class="m-nav-icon">📱</span>
-      <span class="m-nav-label">实机</span>
+      <span class="m-nav-label">抽卡</span>
     </a>
     <a href="#market-biz" class="mobile-nav-item" data-section="market-biz">
       <span class="m-nav-icon">📊</span>

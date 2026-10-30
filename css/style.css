@@ -1,2520 +1,4758 @@
 /* ==========================================================================
+
    《代号：雾绯》 (CODENAME: MIST & CRIMSON)
+
    Victorian Astral Gothic × Flowing Fire Interactive Web Pitch Deck
+
    UI/UX Design System (Vercel Static Production Ready)
+
    ========================================================================== */
 
 :root{
+
   /* Core Palette - Sampled from Official UI References (image2 & image3) */
+
   --bg-abyss: #070510;
+
   --bg-astral: #0D091D;
+
   --bg-card: rgba(20, 15, 42, 0.72);
+
   --bg-card-hover: rgba(30, 22, 62, 0.86);
+
   --bg-glass: rgba(16, 12, 34, 0.65);
 
   /* Mist & Crimson (雾绯 / 流火红) */
+
   --crimson-core: #F43F5E;
+
   --crimson-deep: #BE123C;
+
   --crimson-soft: #FDA4AF;
+
   --crimson-glow: rgba(244, 63, 94, 0.42);
 
   /* Astral Lilac & Butterfly Glow (星盘幻紫 / 蝶翼银紫) */
+
   --lilac-core: #C084FC;
+
   --lilac-bright: #E9D5FF;
+
   --lilac-deep: #7E22CE;
+
   --indigo-astral: #818CF8;
+
   --lilac-glow: rgba(192, 132, 252, 0.38);
 
   /* Victorian Clockwork Gold & Silver (维多利亚钟表金 & 玫瑰银) */
+
   --gold-brass: #E5C158;
+
   --gold-soft: rgba(229, 193, 88, 0.28);
+
   --silver-rose: #E2E8F0;
 
   /* Dynamic Emotion Variable (Used by Flowing Fire AI UI Lab) */
+
   --emotion-color: #EF4444;
+
   --emotion-glow: rgba(239, 68, 68, 0.45);
+
   --emotion-bg: rgba(239, 68, 68, 0.12);
 
   /* Text Hierarchy */
+
   --text-primary: #F8FAFC;
+
   --text-secondary: #CBD5E1;
+
   --text-muted: #94A3B8;
+
   --text-lilac: #D8B4FE;
 
   /* Borders & Hairlines (线条科技感与神秘感) */
+
   --border-subtle: rgba(192, 132, 252, 0.18);
+
   --border-bright: rgba(233, 213, 255, 0.42);
+
   --border-crimson: rgba(244, 63, 94, 0.45);
 
   /* Typography */
+
   --font-serif: 'Noto Serif SC', 'Cinzel', 'Playfair Display', 'Songti SC', serif;
+
   --font-sans: 'Plus Jakarta Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 
   /* Layout & Transitions */
+
   --max-width: 1360px;
+
   --radius-sm: 8px;
+
   --radius-md: 16px;
+
   --radius-lg: 24px;
+
   --radius-xl: 32px;
+
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
 }
 
 /* Reset & Base */
+
 *, *::before, *::after{
+
   box-sizing: border-box;
+
   margin: 0;
+
   padding: 0;
+
 }
 
 html{
+
   scroll-behavior: smooth;
+
   background-color: var(--bg-abyss);
+
   color: var(--text-primary);
+
   font-family: var(--font-sans);
+
   line-height: 1.65;
+
   -webkit-font-smoothing: antialiased;
+
   overflow-x: hidden;
+
 }
 
 body{
+
   background-color: var(--bg-abyss);
+
   position: relative;
+
   min-height: 100vh;
+
   overflow-x: hidden;
+
 }
 
 ::selection{
+
   background: var(--crimson-core);
+
   color: #fff;
+
 }
 
 /* Custom Scrollbar */
+
 ::-webkit-scrollbar{
+
   width: 6px;
+
 }
+
 ::-webkit-scrollbar-track{
+
   background: var(--bg-abyss);
+
 }
+
 ::-webkit-scrollbar-thumb{
+
   background: linear-gradient(180deg, var(--lilac-core), var(--crimson-core));
+
   border-radius: 3px;
+
 }
 
 /* ==========================================================================
+
    Global Ambient Layers (Canvas Particles + Astrolabe Clockwork + Frosted BG)
+
    ========================================================================== */
+
 .ambient-backdrop{
+
   position: fixed;
+
   inset: 0;
+
   z-index: 0;
+
   pointer-events: none;
+
   overflow: hidden;
+
   background:
+
     radial-gradient(circle at 18% 15%, rgba(126, 34, 206, 0.24) 0%, transparent 45%),
+
     radial-gradient(circle at 82% 22%, rgba(244, 63, 94, 0.18) 0%, transparent 45%),
+
     radial-gradient(circle at 50% 85%, rgba(99, 102, 241, 0.16) 0%, transparent 55%),
+
     linear-gradient(180deg, #070510 0%, #0E0922 50%, #080514 100%);
+
 }
 
 .ambient-backdrop::before{
+
   content: '';
+
   position: absolute;
+
   inset: -40px;
+
   background-image: url('../assets/images/wufei-ui-mockup.png');
+
   background-size: cover;
+
   background-position: center;
+
   filter: blur(70px) saturate(1.35) brightness(0.28);
+
   opacity: 0.55;
+
   transform: scale(1.08);
+
 }
 
 /* Rotating Victorian Astrolabe SVG Ring in Background */
+
 .astrolabe-bg-ring{
+
   position: fixed;
+
   top: 50%;
+
   left: 50%;
+
   width: 1100px;
+
   height: 1100px;
+
   margin-left: -550px;
+
   margin-top: -550px;
+
   z-index: 0;
+
   pointer-events: none;
+
   opacity: 0.11;
+
   animation: rotateAstrolabe 120s linear infinite;
+
 }
 
 @keyframes rotateAstrolabe{
+
   from { transform: rotate(0deg); }
+
   to { transform: rotate(360deg); }
+
 }
 
 #mist-canvas{
+
   position: fixed;
+
   inset: 0;
+
   width: 100%;
+
   height: 100%;
+
   z-index: 1;
+
   pointer-events: none;
+
 }
 
 /* Subtle Tech Grid Overlay (线条科技感与神秘感) */
+
 .tech-grid-overlay{
+
   position: fixed;
+
   inset: 0;
+
   z-index: 1;
+
   pointer-events: none;
+
   background-image:
+
     linear-gradient(to right, rgba(192, 132, 252, 0.035) 1px, transparent 1px),
+
     linear-gradient(to bottom, rgba(192, 132, 252, 0.035) 1px, transparent 1px);
+
   background-size: 64px 64px;
+
   mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+
   -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+
 }
 
 /* ==========================================================================
+
    Top Navigation Bar (Astral Glass Header)
+
    ========================================================================== */
+
 .site-header{
+
   position: fixed;
+
   top: 0;
+
   left: 0;
+
   right: 0;
+
   height: 72px;
+
   z-index: 100;
+
   background: rgba(9, 6, 20, 0.78);
+
   backdrop-filter: blur(20px) saturate(160%);
+
   -webkit-backdrop-filter: blur(20px) saturate(160%);
+
   border-bottom: 1px solid var(--border-subtle);
+
   transition: all 0.3s ease;
+
 }
 
 .header-inner{
+
   max-width: var(--max-width);
+
   height: 100%;
+
   margin: 0 auto;
+
   padding: 0 28px;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
   gap: 16px;
+
 }
 
 .brand-identity{
+
   display: flex;
+
   align-items: center;
+
   gap: 12px;
+
   text-decoration: none;
+
   color: var(--text-primary);
+
   flex-shrink: 0;
+
   white-space: nowrap;
+
 }
 
 .brand-emblem{
+
   width: 38px;
+
   height: 38px;
+
   border-radius: 50%;
+
   background: radial-gradient(circle at 30% 30%, var(--crimson-core), var(--lilac-deep));
+
   border: 1px solid var(--lilac-bright);
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   box-shadow: 0 0 18px var(--crimson-glow);
+
   position: relative;
+
 }
 
 .brand-emblem::after{
+
   content: '✦';
+
   font-size: 16px;
+
   color: #fff;
+
 }
 
 .brand-title-group{
+
   display: flex;
+
   flex-direction: column;
+
 }
 
 .brand-name{
+
   font-family: var(--font-serif);
+
   font-size: 1.05rem;
+
   font-weight: 700;
+
   letter-spacing: 0.08em;
+
   background: linear-gradient(90deg, #fff, var(--lilac-bright), var(--crimson-soft));
+
   -webkit-background-clip: text;
+
   -webkit-text-fill-color: transparent;
+
 }
 
 .brand-sub{
+
   font-family: var(--font-mono);
+
   font-size: 0.65rem;
+
   color: var(--text-muted);
+
   letter-spacing: 0.14em;
+
   text-transform: uppercase;
+
 }
 
 .nav-links{
+
   display: flex;
+
   align-items: center;
+
   gap: 6px;
+
   list-style: none;
+
 }
 
 .nav-links a{
+
   text-decoration: none;
+
   color: var(--text-secondary);
+
   font-size: 0.82rem;
+
   padding: 7px 13px;
+
   border-radius: 999px;
+
   transition: all 0.25s ease;
+
   border: 1px solid transparent;
+
   white-space: nowrap;
+
 }
 
 .nav-links a:hover,
+
 .nav-links a.active{
+
   color: #fff;
+
   background: rgba(192, 132, 252, 0.14);
+
   border-color: rgba(192, 132, 252, 0.38);
+
   box-shadow: 0 0 14px rgba(192, 132, 252, 0.22);
+
 }
 
 .header-actions{
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
   flex-shrink: 0;
+
 }
 
 .btn-pill{
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 6px;
+
   padding: 7px 14px;
+
   border-radius: 999px;
+
   font-size: 0.78rem;
+
   font-weight: 600;
+
   cursor: pointer;
+
   transition: all 0.25s ease;
+
   border: 1px solid var(--border-subtle);
+
   background: rgba(255, 255, 255, 0.05);
+
   color: var(--text-primary);
+
   font-family: var(--font-sans);
+
   white-space: nowrap;
+
   flex-shrink: 0;
+
 }
 
 .btn-pill:hover{
+
   border-color: var(--lilac-core);
+
   background: rgba(192, 132, 252, 0.18);
+
   transform: translateY(-1px);
+
 }
 
 .btn-pill.primary{
+
   background: linear-gradient(135deg, var(--crimson-core), var(--lilac-deep));
+
   border-color: rgba(255, 255, 255, 0.3);
+
   box-shadow: 0 4px 18px var(--crimson-glow);
+
 }
 
 .btn-pill.primary:hover{
+
   box-shadow: 0 6px 25px rgba(244, 63, 94, 0.65);
+
 }
 
 /* ==========================================================================
+
    Section Layout & Editorial Numbering (Inspired by image2 & image3 headers)
+
    ========================================================================== */
+
 main{
+
   position: relative;
+
   z-index: 2;
+
   padding-top: 72px;
+
 }
 
 .pitch-section{
+
   max-width: var(--max-width);
+
   margin: 0 auto;
+
   padding: 96px 28px;
+
   position: relative;
+
 }
 
 .pitch-section > *:not(.hero-bg-backdrop):not(.section-frosted-bg):not(.gp-lightbox-modal){
+
   position: relative;
+
   z-index: 2;
+
 }
 
 /* 01~06 页面专属磨砂半透明背景海报隐现层 (Frosted Ambient Section Backdrop) */
+
 .section-frosted-bg{
+
   position: absolute;
+
   top: 0;
+
   bottom: 0;
+
   left: 50%;
+
   width: 100vw;
+
   transform: translateX(-50%);
+
   z-index: 0;
+
   overflow: hidden;
+
   pointer-events: none;
+
 }
 
 .section-frosted-bg::before{
+
   content: "";
+
   position: absolute;
+
   inset: -16px;
+
   background-position: center center;
+
   background-size: cover;
+
   background-repeat: no-repeat;
+
   opacity: 0.5;
+
   filter: blur(3px) saturate(1.15) brightness(1.02);
+
   transform: scale(1.02);
+
 }
 
 #worldview > .section-frosted-bg::before{
+
   background-image: url("../assets/images/nuzhu/20261026-174118.png");
+
   background-position: center 18%;
+
   opacity: 0.62;
+
   filter: blur(1.5px) saturate(1.15) brightness(1.04);
+
 }
+
 #liuhuo-lab > .section-frosted-bg::before{ background-image: url("../assets/images/section-bg-02.jpg"); }
+
 #characters > .section-frosted-bg::before{ background-image: url("../assets/images/section-bg-05.jpg"); }
+
 #dungeon-sim > .section-frosted-bg::before{ background-image: url("../assets/images/section-bg-03.jpg"); }
+
 #market-biz > .section-frosted-bg::before{ background-image: url("../assets/images/section-bg-06.jpg"); }
+
 #ui-spec > .section-frosted-bg::before{ background-image: url("../assets/images/section-bg-04.jpg"); }
 
 .section-frosted-bg::after{
+
   content: "";
+
   position: absolute;
+
   inset: 0;
+
   backdrop-filter: blur(2px);
+
   -webkit-backdrop-filter: blur(2px);
+
   background:
+
     linear-gradient(180deg, rgba(8, 6, 18, 0.78) 0%, rgba(8, 6, 18, 0.1) 14%, rgba(8, 6, 18, 0.1) 86%, rgba(8, 6, 18, 0.82) 100%);
+
 }
 
 .pitch-section + .pitch-section{
+
   border-top: 1px solid rgba(192, 132, 252, 0.14);
+
 }
 
 /* Section Header with Giant Astral Number + Rose/Butterfly Motif */
+
 .section-header{
+
   display: flex;
+
   flex-direction: column;
+
   align-items: flex-start;
+
   margin-bottom: 52px;
+
   position: relative;
+
 }
 
 .section-index-wrap{
+
   display: flex;
+
   align-items: baseline;
+
   gap: 16px;
+
   position: relative;
+
 }
 
 .section-num{
+
   font-family: var(--font-serif);
+
   font-size: clamp(3.2rem, 6vw, 5.2rem);
+
   font-weight: 700;
+
   line-height: 0.9;
+
   background: linear-gradient(180deg, rgba(233, 213, 255, 0.9) 0%, rgba(192, 132, 252, 0.25) 75%, transparent 100%);
+
   -webkit-background-clip: text;
+
   -webkit-text-fill-color: transparent;
+
   letter-spacing: -0.03em;
+
   user-select: none;
+
 }
 
 .section-title{
+
   font-family: var(--font-serif);
+
   font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+
   font-weight: 700;
+
   letter-spacing: 0.03em;
+
   margin-top: 8px;
+
   color: #fff;
+
   text-shadow: 0 0 28px rgba(192, 132, 252, 0.35);
+
 }
 
 .section-desc{
+
   max-width: 780px;
+
   margin-top: 12px;
+
   color: var(--text-secondary);
+
   font-size: 1rem;
+
 }
 
 /* Fine Tech Line Divider (线条科技感) */
+
 .astral-divider{
+
   width: 100%;
+
   height: 1px;
+
   background: linear-gradient(90deg, var(--crimson-core) 0%, var(--lilac-core) 45%, transparent 100%);
+
   margin-top: 20px;
+
   position: relative;
+
 }
 
 .astral-divider::before{
+
   content: '❖';
+
   position: absolute;
+
   left: 0;
+
   top: -10px;
+
   color: var(--crimson-core);
+
   font-size: 14px;
+
 }
 
 /* ==========================================================================
+
    00. HERO SECTION (雾绯序幕 · 9:16 维多利亚无限流乙游)
+
    ========================================================================== */
+
 .hero-section{
+
   min-height: calc(100vh - 72px);
+
   display: flex;
+
   align-items: center;
+
   padding-top: 48px;
+
   padding-bottom: 72px;
+
   position: relative;
+
 }
 
 .hero-bg-backdrop{
+
   position: absolute;
+
   top: 0;
+
   bottom: 0;
+
   left: 50%;
+
   width: 100vw;
+
   transform: translateX(-50%);
+
   z-index: 0;
+
   background: url("../assets/images/20261026-161348.png") center center / cover no-repeat;
+
   opacity: 1;
+
   pointer-events: none;
+
 }
 
 .hero-bg-backdrop::after{
+
   content: "";
+
   position: absolute;
+
   inset: 0;
+
   background:
+
     linear-gradient(90deg, rgba(8, 6, 18, 0.58) 0%, rgba(8, 6, 18, 0.18) 52%, rgba(8, 6, 18, 0.45) 100%),
+
     linear-gradient(180deg, rgba(8, 6, 18, 0.22) 0%, transparent 45%, rgba(8, 6, 18, 0.94) 100%);
+
 }
 
 .hero-grid{
+
   display: grid;
+
   grid-template-columns: 1.05fr 0.95fr;
+
   gap: 48px;
+
   align-items: center;
+
   width: 100%;
+
   position: relative;
+
   z-index: 2;
+
 }
 
 .hero-badges{
+
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 10px;
+
   margin-bottom: 22px;
+
   position: relative;
+
   top: -105px;
+
 }
 
 .badge-tag{
+
   display: inline-flex;
+
   align-items: center;
+
   gap: 6px;
+
   padding: 6px 14px;
+
   border-radius: 999px;
+
   font-size: 0.78rem;
+
   font-weight: 600;
+
   letter-spacing: 0.06em;
+
   background: rgba(192, 132, 252, 0.12);
+
   border: 1px solid rgba(192, 132, 252, 0.35);
+
   color: var(--lilac-bright);
+
 }
 
 .badge-tag.crimson{
+
   background: rgba(244, 63, 94, 0.15);
+
   border-color: rgba(244, 63, 94, 0.45);
+
   color: var(--crimson-soft);
+
 }
 
 .badge-tag.gold{
+
   background: rgba(229, 193, 88, 0.12);
+
   border-color: rgba(229, 193, 88, 0.4);
+
   color: var(--gold-brass);
+
 }
 
 .hero-title{
   font-family: var(--font-serif);
   font-size: clamp(2.8rem, 5.4vw, 4.6rem);
-  font-weight: 700;
+  font-weight: 900;
   line-height: 1.08;
   letter-spacing: 0.04em;
   margin-top: -5px;
   margin-bottom: 12px;
   position: relative;
-  top: -35px;
-  background: linear-gradient(135deg, #FFFFFF 0%, #F3E8FF 45%, #FDA4AF 85%, #F43F5E 100%);
+  top: -95px;
+  display: flex;
+  gap: 0.06em;
+  background: none;
+  -webkit-text-fill-color: initial;
+  filter: none;
+}
+
+.hero-title-char{
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: 1;
+  /* 白色稍微透着一点点紫：顶部纯白，底部轻柔紫白渐变 */
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 48%, #F7F2FE 75%, #E9DAFC 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 8px 32px rgba(244, 63, 94, 0.28));
+  filter: drop-shadow(0 2px 14px rgba(192, 132, 252, 0.45)) drop-shadow(0 6px 30px rgba(147, 51, 234, 0.25));
 }
 
 /* High-Impact KPI Strip (Inspired by Valorant Mobile Pitch Deck) */
+
 .hero-kpi-grid{
+
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 14px;
+
   margin-bottom: 30px;
+
   position: relative;
-  top: 15px;
-  left: -5px;
+
+  top: 125px;
+
+  left: -35px;
+
 }
 
 .kpi-card{
+
   background: var(--bg-card);
+
   border: 1px solid var(--border-subtle);
+
   border-radius: var(--radius-md);
+
   padding: 14px 16px;
+
   position: relative;
+
   overflow: hidden;
+
   transition: all 0.3s ease;
+
 }
 
 .kpi-card:hover{
+
   border-color: var(--lilac-core);
+
   transform: translateY(-3px);
+
   box-shadow: 0 10px 24px rgba(192, 132, 252, 0.18);
+
 }
 
 .kpi-value{
+
   font-family: var(--font-serif);
+
   font-size: 1.65rem;
+
   font-weight: 700;
+
   color: #fff;
+
   line-height: 1.1;
+
   background: linear-gradient(90deg, #fff, var(--crimson-soft));
+
   -webkit-background-clip: text;
+
   -webkit-text-fill-color: transparent;
+
 }
 
 .kpi-unit{
+
   font-size: 0.78rem;
+
   color: var(--lilac-core);
+
   margin-left: 3px;
+
 }
 
 .kpi-label{
+
   font-size: 0.75rem;
+
   color: var(--text-muted);
+
   margin-top: 4px;
+
 }
 
 @keyframes pulseFloat{
+
   0%, 100% { transform: translateY(0px) scale(1); }
+
   50% { transform: translateY(-6px) scale(1.03); }
+
 }
 
 /* ==========================================================================
+
    01. WORLDVIEW & MULTIVERSE MATRIX (世界观·无限流多元时空与主线脉络)
+
    ========================================================================== */
+
 .worldview-stage-layout{
+
   display: flex;
+
   justify-content: space-between;
+
   align-items: flex-end;
+
   gap: 40px;
+
   margin: 8px 0 52px 0;
+
   min-height: 430px;
+
   position: relative;
+
 }
 
 .world-Realm-tabs{
+
   display: flex;
+
   flex-direction: column;
+
   gap: 16px;
+
   width: 100%;
+
   max-width: 450px;
+
   margin: 0;
+
   padding-left: 22px;
+
   position: relative;
+
   flex-shrink: 0;
+
 }
 
 /* 女主无框UI悬浮人物简介（右侧女主背面形象左侧、一半文字叠于女主背影之上） */
+
 .heroine-floating-info{
+
   position: relative;
+
   z-index: 3;
+
   margin-right: 12%;
+
   margin-bottom: 28px;
+
   max-width: 460px;
+
   text-align: left;
+
   background: none;
+
   border: none;
+
   box-shadow: none;
+
   pointer-events: none;
+
   user-select: text;
+
 }
 
 .heroine-ui-eyebrow{
+
   display: flex;
+
   align-items: center;
+
   gap: 10px;
+
   font-family: var(--font-mono);
+
   font-size: 0.78rem;
+
   font-weight: 700;
+
   letter-spacing: 0.2em;
+
   color: var(--gold-brass);
+
   margin-bottom: 10px;
+
   text-shadow: 0 2px 12px rgba(4, 2, 12, 0.95);
+
 }
 
 .heroine-ui-dot{
+
   color: var(--crimson-soft);
+
   font-size: 0.9rem;
+
   text-shadow: 0 0 12px var(--crimson-core);
+
 }
 
 .heroine-ui-line{
+
   flex: 1;
+
   max-width: 110px;
+
   height: 1px;
+
   background: linear-gradient(90deg, var(--crimson-soft), var(--gold-brass), transparent);
+
   box-shadow: 0 0 10px rgba(244, 63, 94, 0.6);
+
 }
 
 .heroine-ui-role{
+
+  font-family: var(--font-serif);
+
+  font-size: clamp(1.95rem, 2.8vw, 2.55rem);
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  line-height: 1.2;
+
+  margin-bottom: 10px;
+
+  background: linear-gradient(90deg, #FFFFFF 0%, #F5D0FE 55%, var(--gold-brass) 100%);
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  filter: drop-shadow(0 4px 18px rgba(5, 3, 14, 0.95)) drop-shadow(0 0 24px rgba(192, 132, 252, 0.38));
+
+}
+
+.heroine-ui-line-text{
+
+  font-family: var(--font-serif);
+
+  font-size: clamp(1.18rem, 1.65vw, 1.42rem);
+
+  font-weight: 700;
+
+  color: #F8FAFC;
+
+  letter-spacing: 0.06em;
+
+  line-height: 1.68;
+
+  text-shadow:
+
+    0 2px 6px rgba(4, 2, 12, 0.98),
+
+    0 4px 20px rgba(4, 2, 12, 0.95),
+
+    0 0 32px rgba(8, 6, 18, 0.92);
+
+}
+
+.heroine-ui-highlight{
+
+  color: var(--crimson-soft);
+
+  font-weight: 900;
+
+  border-bottom: 1px dashed rgba(244, 63, 94, 0.65);
+
+  text-shadow:
+
+    0 2px 10px rgba(4, 2, 12, 0.98),
+
+    0 0 22px rgba(244, 63, 94, 0.55);
+
+}
+
+.world-Realm-tabs::before{
+
+  content: "";
+
+  position: absolute;
+
+  left: 3px;
+
+  top: 16px;
+
+  bottom: 16px;
+
+  width: 2px;
+
+  background: linear-gradient(
+
+    180deg,
+
+    var(--crimson-core) 0%,
+
+    var(--lilac-core) 50%,
+
+    var(--gold-brass) 85%,
+
+    transparent 100%
+
+  );
+
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.45);
+
+}
+
+.realm-static-card{
+
+  background: linear-gradient(135deg, rgba(18, 12, 38, 0.82), rgba(30, 19, 58, 0.68));
+
+  backdrop-filter: blur(14px);
+
+  -webkit-backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(192, 132, 252, 0.34);
+
+  border-left: 3px solid var(--crimson-core);
+
+  border-radius: var(--radius-md);
+
+  padding: 18px 22px;
+
+  text-align: left;
+
+  cursor: default;
+
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+
+  color: var(--text-primary);
+
+  position: relative;
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+
+}
+
+.realm-static-card::before{
+
+  content: "❖";
+
+  position: absolute;
+
+  left: -27px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-size: 0.72rem;
+
+  color: var(--crimson-soft);
+
+  text-shadow: 0 0 10px var(--crimson-core);
+
+}
+
+.realm-static-card:nth-child(2){
+
+  border-left-color: var(--lilac-core);
+
+}
+
+.realm-static-card:nth-child(2)::before{
+
+  color: var(--lilac-bright);
+
+}
+
+.realm-static-card:nth-child(3){
+
+  border-left-color: var(--gold-brass);
+
+}
+
+.realm-static-card:nth-child(3)::before{
+
+  color: var(--gold-brass);
+
+}
+
+.realm-static-card:nth-child(4){
+
+  border-left-color: var(--crimson-soft);
+
+}
+
+.realm-static-card:hover{
+
+  border-color: rgba(244, 63, 94, 0.52);
+
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.58), 0 0 22px rgba(192, 132, 252, 0.22);
+
+  transform: translateX(4px);
+
+}
+
+.realm-tab-era{
+
+  font-family: var(--font-mono);
+
+  font-size: 0.74rem;
+
+  font-weight: 700;
+
+  color: var(--crimson-soft);
+
+  letter-spacing: 0.14em;
+
+  display: block;
+
+  margin-bottom: 5px;
+
+}
+
+.realm-tab-name{
+
+  font-family: var(--font-serif);
+
+  font-size: 1.22rem;
+
+  font-weight: 800;
+
+  color: #fff;
+
+  line-height: 1.3;
+
+}
+
+.realm-tab-sub{
+
+  font-size: 0.82rem;
+
+  color: var(--text-secondary);
+
+  margin-top: 5px;
+
+  line-height: 1.5;
+
+}
+
+/* 5-Step Mainline Chain (主线五步演进链路) */
+
+.mainline-section-heading{
+
+  font-family: var(--font-serif);
+
+  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
+
+  font-weight: 700;
+
+  color: #fff;
+
+  margin: 12px 0 22px;
+
+  letter-spacing: 0.04em;
+
+  text-shadow: 0 0 24px rgba(192, 132, 252, 0.38);
+
+}
+
+.mainline-chain{
+
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 24px;
+
+  margin-top: 16px;
+
+}
+
+.chain-step{
+
+  background: rgba(18, 13, 38, 0.78);
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-md);
+
+  padding: 22px 18px;
+
+  position: relative;
+
+  transition: all 0.3s ease;
+
+}
+
+/* STEP 卡片之间贴合 UI 色调的流火金绯指向箭头（对齐标题分割线高度） */
+
+.chain-arrow{
+
+  position: absolute;
+
+  top: 81px;
+
+  right: -30px;
+
+  width: 36px;
+
+  height: 18px;
+
+  z-index: 5;
+
+  pointer-events: none;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.72)) drop-shadow(0 0 14px rgba(192, 132, 252, 0.45));
+
+  animation: chainArrowPulse 2.4s ease-in-out infinite;
+
+}
+
+.chain-arrow svg{
+
+  width: 100%;
+
+  height: 100%;
+
+  overflow: visible;
+
+}
+
+@keyframes chainArrowPulse{
+
+  0%, 100% {
+
+    transform: translateX(0);
+
+    opacity: 0.88;
+
+  }
+
+  50% {
+
+    transform: translateX(3px);
+
+    opacity: 1;
+
+  }
+
+}
+
+.chain-step:hover{
+
+  border-color: var(--crimson-core);
+
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 28px rgba(244, 63, 94, 0.18);
+
+}
+
+.chain-num{
+
+  font-family: var(--font-mono);
+
+  font-size: 0.72rem;
+
+  color: var(--crimson-soft);
+
+  letter-spacing: 0.14em;
+
+  margin-bottom: 10px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+}
+
+.chain-title{
+
+  font-family: var(--font-serif);
+
+  font-size: 1.32rem;
+
+  font-weight: 800;
+
+  line-height: 1.35;
+
+  color: #fff;
+
+  margin-bottom: 12px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid rgba(192, 132, 252, 0.24);
+
+  text-shadow: 0 2px 14px rgba(244, 63, 94, 0.28);
+
+}
+
+.chain-text{
+
+  font-size: 0.83rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.6;
+
+}
+
+/* ==========================================================================
+
+   02. CORE LORE & FLOWING FIRE AI UI LAB (四大核心设定 + 流火情绪AI动态UI实验室)
+
+   ========================================================================== */
+
+.lore-4-grid{
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+
+  margin-bottom: 42px;
+
+}
+
+.lore-card{
+
+  background: var(--bg-card);
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-md);
+
+  padding: 24px 20px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: all 0.3s ease;
+
+}
+
+.lore-card::before{
+
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  right: 0;
+
+  height: 3px;
+
+  background: linear-gradient(90deg, var(--crimson-core), var(--lilac-core));
+
+}
+
+.lore-card:hover{
+
+  transform: translateY(-4px);
+
+  border-color: var(--lilac-core);
+
+  box-shadow: 0 14px 32px rgba(192, 132, 252, 0.2);
+
+}
+
+.lore-index{
+
+  font-family: var(--font-mono);
+
+  font-size: 0.88rem;
+
+  font-weight: 800;
+
+  color: var(--lilac-bright);
+
+  letter-spacing: 0.14em;
+
+  margin-bottom: 6px;
+
+}
+
+.lore-name{
+
+  font-family: var(--font-serif);
+
+  font-size: 1.88rem;
+
+  font-weight: 900;
+
+  color: #fff;
+
+  margin-bottom: 8px;
+
+  line-height: 1.25;
+
+  text-shadow: 0 2px 18px rgba(244, 63, 94, 0.36);
+
+}
+
+.lore-sub{
+
+  font-size: 0.78rem;
+
+  color: var(--crimson-soft);
+
+  margin-bottom: 12px;
+
+  font-weight: 600;
+
+}
+
+.lore-body{
+
+  font-size: 0.86rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.65;
+
+}
+
+/* Flowing Fire 5-Emotion Static Transparent Showcase */
+
+.liuhuo-lab-container{
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 0;
+
+  padding: 16px 8px 8px;
+
+  box-shadow: none;
+
+  position: relative;
+
+}
+
+.liuhuo-lab-header{
+
+  width: 100%;
+
+  display: block;
+
+  margin-bottom: 0;
+
+  padding-bottom: 0;
+
+  border-bottom: none;
+
+}
+
+.emotion-selector-bar{
+
+  display: grid;
+
+  grid-template-columns: repeat(5, 1fr);
+
+  gap: 16px;
+
+  width: 100%;
+
+  max-width: 100%;
+
+  align-items: center;
+
+  justify-items: center;
+
+  margin: 0 auto;
+
+}
+
+.emotion-orb-btn{
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  padding: 8px 4px;
+
+  white-space: nowrap;
+
+  background: transparent;
+
+  border: none;
+
+  box-shadow: none;
+
+  color: #F8FAFC;
+
+  cursor: default;
+
+  font-family: var(--font-serif);
+
+  font-size: 1.22rem;
+
+  letter-spacing: 0.05em;
+
+  text-shadow:
+
+    0 2px 8px rgba(4, 2, 12, 0.98),
+
+    0 4px 20px rgba(4, 2, 12, 0.95),
+
+    0 0 28px rgba(8, 6, 18, 0.9);
+
+  transition: transform 0.3s ease;
+
+}
+
+.emotion-orb-btn strong{
+
+  color: #FFFFFF;
+
+  font-weight: 900;
+
+}
+
+.emotion-emblem-img{
+
+  width: 76px;
+
+  height: 76px;
+
+  object-fit: contain;
+
+  flex-shrink: 0;
+
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.85));
+
+  transition: transform 0.35s ease;
+
+}
+
+.emotion-orb-btn:hover .emotion-emblem-img{
+
+  transform: scale(1.08);
+
+}
+
+/* 五种情绪下方居中无框星盘说明文本 */
+
+.emotion-spectrum-caption{
+
+  margin-top: 26px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  width: 100%;
+
+  text-align: center;
+
+}
+
+.emotion-spectrum-caption .caption-wing{
+
+  flex: 1;
+
+  max-width: 140px;
+
+  height: 1px;
+
+  position: relative;
+
+}
+
+.emotion-spectrum-caption .caption-wing.left{
+
+  background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.55), var(--crimson-soft));
+
+}
+
+.emotion-spectrum-caption .caption-wing.right{
+
+  background: linear-gradient(270deg, transparent, rgba(192, 132, 252, 0.55), var(--crimson-soft));
+
+}
+
+.emotion-spectrum-caption .caption-wing.left::after,
+
+.emotion-spectrum-caption .caption-wing.right::before{
+
+  content: "❖";
+
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  font-size: 0.72rem;
+
+  color: var(--gold-brass);
+
+  text-shadow: 0 0 10px rgba(244, 63, 94, 0.65);
+
+}
+
+.emotion-spectrum-caption .caption-wing.left::after{
+
+  right: -6px;
+
+}
+
+.emotion-spectrum-caption .caption-wing.right::before{
+
+  left: -6px;
+
+}
+
+.emotion-spectrum-caption .caption-text{
+
+  font-family: var(--font-serif);
+
+  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
+
+  font-weight: 700;
+
+  color: #F8FAFC;
+
+  letter-spacing: 0.08em;
+
+  line-height: 1.6;
+
+  text-shadow:
+
+    0 2px 8px rgba(4, 2, 12, 0.98),
+
+    0 4px 20px rgba(4, 2, 12, 0.95),
+
+    0 0 32px rgba(8, 6, 18, 0.92);
+
+}
+
+/* ==========================================================================
+
+   03. CHARACTERS MATRIX (四男主横向卡片总览 图四 + 点击展开深度详情介绍 图五)
+
+   ========================================================================== */
+
+.char-cards-overview{
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 24px;
+
+  align-items: stretch;
+
+}
+
+.char-vertical-card{
+
+  background: linear-gradient(170deg, rgba(22, 15, 48, 0.9), rgba(10, 7, 24, 0.96));
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+
+  transition: all 0.38s var(--ease-out-expo);
+
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+
+  position: relative;
+
+}
+
+.char-vertical-card:hover,
+
+.char-vertical-card:focus-visible{
+
+  transform: translateY(-8px);
+
+  border-color: var(--crimson-core);
+
+  box-shadow:
+
+    0 24px 56px rgba(0, 0, 0, 0.72),
+
+    0 0 32px rgba(244, 63, 94, 0.28);
+
+  outline: none;
+
+}
+
+/* Top Image Box inside Vertical Card (9:16 完整呈现角色立绘与内置竖排花体铭牌) */
+
+.char-vcard-media{
+
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 9 / 16;
+
+  overflow: hidden;
+
+  background: #080514;
+
+  border-bottom: 1px solid rgba(192, 132, 252, 0.22);
+
+}
+
+.char-vcard-img{
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center center;
+
+  display: block;
+
+  transform: translateZ(0) scale(1.001);
+
+  backface-visibility: hidden;
+
+  -webkit-backface-visibility: hidden;
+
+  will-change: transform;
+
+  transition: transform 0.65s var(--ease-out-expo), filter 0.4s ease;
+
+}
+
+.char-vertical-card:hover .char-vcard-img{
+
+  transform: scale(1.04);
+
+}
+
+/* Bottom Info Box inside Vertical Card (图四下方角色简介) */
+
+.char-vcard-body{
+
+  padding: 22px 20px 24px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  flex: 1;
+
+  background:
+
+    radial-gradient(circle at 90% 100%, rgba(192, 132, 252, 0.08), transparent 60%);
+
+}
+
+.char-vcard-eyebrow{
+
+  font-family: var(--font-mono);
+
+  font-size: 0.74rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+
+}
+
+.char-vcard-eyebrow.crimson{ color: var(--crimson-soft); }
+
+.char-vcard-eyebrow.lilac{ color: var(--lilac-bright); }
+
+.char-vcard-eyebrow.gold{ color: var(--gold-brass); }
+
+.char-vcard-eyebrow.emerald{ color: #34D399; }
+
+.char-vcard-title{
+
+  font-family: var(--font-serif);
+
+  font-size: 1.55rem;
+
+  font-weight: 800;
+
+  color: #fff;
+
+  line-height: 1.25;
+
+  margin: 2px 0 4px;
+
+}
+
+.char-vcard-summary{
+
+  font-size: 0.88rem;
+
+  color: var(--text-secondary);
+
+  line-height: 1.65;
+
+}
+
+.tag-crimson{ color: var(--crimson-soft); font-weight: 700; }
+
+.tag-lilac{ color: var(--lilac-bright); font-weight: 700; }
+
+.tag-gold{ color: var(--gold-brass); font-weight: 700; }
+
+.tag-emerald{ color: #34D399; font-weight: 700; }
+
+.char-vcard-tags{
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 6px;
+
+  margin-top: auto;
+
+  padding-top: 12px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+}
+
+.char-vcard-tags span{
+
+  font-size: 0.72rem;
+
+  font-weight: 600;
+
+  padding: 3px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(192, 132, 252, 0.25);
+
+  color: var(--lilac-bright);
+
+}
+
+@keyframes charDetailFadeIn{
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(12px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+/* Yesterday Has Not Yet Happened (《昨日尚未发生》) Interactive Prototype */
+
+.dungeon-prototype-grid{
+
+  display: grid;
+
+  grid-template-columns: 1.05fr 0.95fr;
+
+  gap: 36px;
+
+  align-items: center;
+
+  background: linear-gradient(145deg, rgba(20, 14, 44, 0.88), rgba(10, 7, 24, 0.95));
+
+  border: 1px solid var(--border-bright);
+
+  border-radius: var(--radius-xl);
+
+  padding: 36px;
+
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
+
+}
+
+/* 04页新版：3个 9:16 竖屏元素展示框 + 下方三级标题与 16:9 横屏展示框 */
+
+.dungeon-prototype-grid.three-vertical-frames{
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 32px;
+
+  align-items: stretch;
+
+  padding: 36px;
+
+}
+
+.dungeon-prototype-grid.three-vertical-frames .vertical-916-frame{
+
+  aspect-ratio: 9 / 18.2;
+
+}
+
+.dungeon-prototype-grid.three-vertical-frames .vertical-916-frame:hover .vertical-frame-img{
+
+  transform: none;
+
+}
+
+.vertical-916-frame{
+
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 9 / 16;
+
+  border-radius: 22px;
+
+  overflow: hidden;
+
+  background: #080514;
+
+  border: 1px solid rgba(192, 132, 252, 0.36);
+
+  box-shadow:
+
+    0 20px 48px rgba(0, 0, 0, 0.65),
+
+    0 0 28px rgba(192, 132, 252, 0.14);
+
+  transition: transform 0.38s var(--ease-out-expo), border-color 0.35s ease, box-shadow 0.35s ease;
+
+}
+
+.vertical-916-frame::before{
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  right: 0;
+
+  height: 3px;
+
+  background: linear-gradient(90deg, var(--crimson-core), var(--lilac-core), var(--gold-brass));
+
+  z-index: 3;
+
+}
+
+.vertical-916-frame:hover{
+
+  transform: translateY(-6px);
+
+  border-color: var(--crimson-core);
+
+  box-shadow:
+
+    0 26px 58px rgba(0, 0, 0, 0.78),
+
+    0 0 34px rgba(244, 63, 94, 0.28);
+
+}
+
+.vertical-frame-img{
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  object-position: center center;
+
+  display: block;
+
+  transition: transform 0.6s var(--ease-out-expo);
+
+}
+
+.vertical-916-frame:hover .vertical-frame-img{
+
+  transform: scale(1.04);
+
+}
+
+/* 04页下方：左侧 9:16《副本》展示图 + 右侧无底色透明 UI 副本介绍 */
+
+.dungeon-instance-showcase{
+
+  margin-top: 52px;
+
+  display: grid;
+
+  grid-template-columns: 360px 1fr;
+
+  gap: 56px;
+
+  align-items: center;
+
+  width: 100%;
+
+}
+
+.dungeon-instance-frame{
+
+  width: 100%;
+
+  max-width: 360px;
+
+}
+
+.dungeon-instance-floating-info{
+
+  position: relative;
+
+  z-index: 3;
+
+  max-width: 760px;
+
+  text-align: left;
+
+  background: none;
+
+  border: none;
+
+  box-shadow: none;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+/* 04 核心副本设定：主副标题层级排版 */
+.dungeon-ui-title{
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  filter: none !important;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.dungeon-title-prefix{
   font-family: var(--font-serif);
   font-size: clamp(1.95rem, 2.8vw, 2.55rem);
   font-weight: 900;
   letter-spacing: 0.08em;
   line-height: 1.2;
-  margin-bottom: 10px;
-  background: linear-gradient(90deg, #FFFFFF 0%, #F5D0FE 55%, var(--gold-brass) 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5D0FE 40%, #FDA4AF 80%, #F43F5E 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 18px rgba(5, 3, 14, 0.95)) drop-shadow(0 0 24px rgba(192, 132, 252, 0.38));
+  filter: drop-shadow(0 2px 14px rgba(244, 63, 94, 0.42));
 }
 
-.heroine-ui-line-text{
+.dungeon-title-name{
   font-family: var(--font-serif);
-  font-size: clamp(1.18rem, 1.65vw, 1.42rem);
+  font-size: clamp(1.7rem, 2.4vw, 2.2rem);
   font-weight: 700;
-  color: #F8FAFC;
-  letter-spacing: 0.06em;
-  line-height: 1.68;
-  text-shadow:
-    0 2px 6px rgba(4, 2, 12, 0.98),
-    0 4px 20px rgba(4, 2, 12, 0.95),
-    0 0 32px rgba(8, 6, 18, 0.92);
-}
-
-.heroine-ui-highlight{
-  color: var(--crimson-soft);
-  font-weight: 900;
-  border-bottom: 1px dashed rgba(244, 63, 94, 0.65);
-  text-shadow:
-    0 2px 10px rgba(4, 2, 12, 0.98),
-    0 0 22px rgba(244, 63, 94, 0.55);
-}
-
-.world-Realm-tabs::before{
-  content: "";
-  position: absolute;
-  left: 3px;
-  top: 16px;
-  bottom: 16px;
-  width: 2px;
-  background: linear-gradient(
-    180deg,
-    var(--crimson-core) 0%,
-    var(--lilac-core) 50%,
-    var(--gold-brass) 85%,
-    transparent 100%
-  );
-  box-shadow: 0 0 12px rgba(244, 63, 94, 0.45);
-}
-
-.realm-static-card{
-  background: linear-gradient(135deg, rgba(18, 12, 38, 0.82), rgba(30, 19, 58, 0.68));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(192, 132, 252, 0.34);
-  border-left: 3px solid var(--crimson-core);
-  border-radius: var(--radius-md);
-  padding: 18px 22px;
-  text-align: left;
-  cursor: default;
-  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
-  color: var(--text-primary);
-  position: relative;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
-}
-
-.realm-static-card::before{
-  content: "❖";
-  position: absolute;
-  left: -27px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.72rem;
-  color: var(--crimson-soft);
-  text-shadow: 0 0 10px var(--crimson-core);
-}
-
-.realm-static-card:nth-child(2){
-  border-left-color: var(--lilac-core);
-}
-.realm-static-card:nth-child(2)::before{
-  color: var(--lilac-bright);
-}
-
-.realm-static-card:nth-child(3){
-  border-left-color: var(--gold-brass);
-}
-.realm-static-card:nth-child(3)::before{
-  color: var(--gold-brass);
-}
-
-.realm-static-card:nth-child(4){
-  border-left-color: var(--crimson-soft);
-}
-
-.realm-static-card:hover{
-  border-color: rgba(244, 63, 94, 0.52);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.58), 0 0 22px rgba(192, 132, 252, 0.22);
-  transform: translateX(4px);
-}
-
-.realm-tab-era{
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--crimson-soft);
-  letter-spacing: 0.14em;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.realm-tab-name{
-  font-family: var(--font-serif);
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.3;
-}
-
-.realm-tab-sub{
-  font-size: 0.82rem;
-  color: var(--text-secondary);
-  margin-top: 5px;
-  line-height: 1.5;
-}
-
-/* 5-Step Mainline Chain (主线五步演进链路) */
-.mainline-section-heading{
-  font-family: var(--font-serif);
-  font-size: clamp(1.65rem, 2.4vw, 2.15rem);
-  font-weight: 700;
-  color: #fff;
-  margin: 12px 0 22px;
   letter-spacing: 0.04em;
-  text-shadow: 0 0 24px rgba(192, 132, 252, 0.38);
-}
-
-.mainline-chain{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-  margin-top: 16px;
-}
-
-.chain-step{
-  background: rgba(18, 13, 38, 0.78);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 22px 18px;
-  position: relative;
-  transition: all 0.3s ease;
-}
-
-/* STEP 卡片之间贴合 UI 色调的流火金绯指向箭头（对齐标题分割线高度） */
-.chain-arrow{
-  position: absolute;
-  top: 81px;
-  right: -30px;
-  width: 36px;
-  height: 18px;
-  z-index: 5;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 0 8px rgba(244, 63, 94, 0.72)) drop-shadow(0 0 14px rgba(192, 132, 252, 0.45));
-  animation: chainArrowPulse 2.4s ease-in-out infinite;
-}
-
-.chain-arrow svg{
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-@keyframes chainArrowPulse{
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 0.88;
-  }
-  50% {
-    transform: translateX(3px);
-    opacity: 1;
-  }
-}
-
-.chain-step:hover{
-  border-color: var(--crimson-core);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 28px rgba(244, 63, 94, 0.18);
-}
-
-.chain-num{
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  color: var(--crimson-soft);
-  letter-spacing: 0.14em;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.chain-title{
-  font-family: var(--font-serif);
-  font-size: 1.32rem;
-  font-weight: 800;
-  line-height: 1.35;
-  color: #fff;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(192, 132, 252, 0.24);
-  text-shadow: 0 2px 14px rgba(244, 63, 94, 0.28);
-}
-
-.chain-text{
-  font-size: 0.83rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5D0FE 40%, #FDA4AF 80%, #F43F5E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(244, 63, 94, 0.42));
 }
 
 /* ==========================================================================
-   02. CORE LORE & FLOWING FIRE AI UI LAB (四大核心设定 + 流火情绪AI动态UI实验室)
-   ========================================================================== */
-.lore-4-grid{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 42px;
-}
 
-.lore-card{
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 24px 20px;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.lore-card::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--crimson-core), var(--lilac-core));
-}
-
-.lore-card:hover{
-  transform: translateY(-4px);
-  border-color: var(--lilac-core);
-  box-shadow: 0 14px 32px rgba(192, 132, 252, 0.2);
-}
-
-.lore-index{
-  font-family: var(--font-mono);
-  font-size: 0.88rem;
-  font-weight: 800;
-  color: var(--lilac-bright);
-  letter-spacing: 0.14em;
-  margin-bottom: 6px;
-}
-
-.lore-name{
-  font-family: var(--font-serif);
-  font-size: 1.88rem;
-  font-weight: 900;
-  color: #fff;
-  margin-bottom: 8px;
-  line-height: 1.25;
-  text-shadow: 0 2px 18px rgba(244, 63, 94, 0.36);
-}
-
-.lore-sub{
-  font-size: 0.78rem;
-  color: var(--crimson-soft);
-  margin-bottom: 12px;
-  font-weight: 600;
-}
-
-.lore-body{
-  font-size: 0.86rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-/* Flowing Fire 5-Emotion Static Transparent Showcase */
-.liuhuo-lab-container{
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 16px 8px 8px;
-  box-shadow: none;
-  position: relative;
-}
-
-.liuhuo-lab-header{
-  width: 100%;
-  display: block;
-  margin-bottom: 0;
-  padding-bottom: 0;
-  border-bottom: none;
-}
-
-.emotion-selector-bar{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
-  width: 100%;
-  max-width: 100%;
-  align-items: center;
-  justify-items: center;
-  margin: 0 auto;
-}
-
-.emotion-orb-btn{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 8px 4px;
-  white-space: nowrap;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  color: #F8FAFC;
-  cursor: default;
-  font-family: var(--font-serif);
-  font-size: 1.22rem;
-  letter-spacing: 0.05em;
-  text-shadow:
-    0 2px 8px rgba(4, 2, 12, 0.98),
-    0 4px 20px rgba(4, 2, 12, 0.95),
-    0 0 28px rgba(8, 6, 18, 0.9);
-  transition: transform 0.3s ease;
-}
-
-.emotion-orb-btn strong{
-  color: #FFFFFF;
-  font-weight: 900;
-}
-
-.emotion-emblem-img{
-  width: 76px;
-  height: 76px;
-  object-fit: contain;
-  flex-shrink: 0;
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.85));
-  transition: transform 0.35s ease;
-}
-
-.emotion-orb-btn:hover .emotion-emblem-img{
-  transform: scale(1.08);
-}
-
-/* 五种情绪下方居中无框星盘说明文本 */
-.emotion-spectrum-caption{
-  margin-top: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 18px;
-  width: 100%;
-  text-align: center;
-}
-
-.emotion-spectrum-caption .caption-wing{
-  flex: 1;
-  max-width: 140px;
-  height: 1px;
-  position: relative;
-}
-
-.emotion-spectrum-caption .caption-wing.left{
-  background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.55), var(--crimson-soft));
-}
-
-.emotion-spectrum-caption .caption-wing.right{
-  background: linear-gradient(270deg, transparent, rgba(192, 132, 252, 0.55), var(--crimson-soft));
-}
-
-.emotion-spectrum-caption .caption-wing.left::after,
-.emotion-spectrum-caption .caption-wing.right::before{
-  content: "❖";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.72rem;
-  color: var(--gold-brass);
-  text-shadow: 0 0 10px rgba(244, 63, 94, 0.65);
-}
-
-.emotion-spectrum-caption .caption-wing.left::after{
-  right: -6px;
-}
-
-.emotion-spectrum-caption .caption-wing.right::before{
-  left: -6px;
-}
-
-.emotion-spectrum-caption .caption-text{
-  font-family: var(--font-serif);
-  font-size: clamp(1.12rem, 1.5vw, 1.32rem);
-  font-weight: 700;
-  color: #F8FAFC;
-  letter-spacing: 0.08em;
-  line-height: 1.6;
-  text-shadow:
-    0 2px 8px rgba(4, 2, 12, 0.98),
-    0 4px 20px rgba(4, 2, 12, 0.95),
-    0 0 32px rgba(8, 6, 18, 0.92);
-}
-
-/* ==========================================================================
-   03. CHARACTERS MATRIX (四男主横向卡片总览 图四 + 点击展开深度详情介绍 图五)
-   ========================================================================== */
-.char-cards-overview{
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  align-items: stretch;
-}
-
-.char-vertical-card{
-  background: linear-gradient(170deg, rgba(22, 15, 48, 0.9), rgba(10, 7, 24, 0.96));
-  border: 1px solid var(--border-subtle);
-  border-radius: 18px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.38s var(--ease-out-expo);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
-  position: relative;
-}
-
-.char-vertical-card:hover,
-.char-vertical-card:focus-visible{
-  transform: translateY(-8px);
-  border-color: var(--crimson-core);
-  box-shadow:
-    0 24px 56px rgba(0, 0, 0, 0.72),
-    0 0 32px rgba(244, 63, 94, 0.28);
-  outline: none;
-}
-
-/* Top Image Box inside Vertical Card (9:16 完整呈现角色立绘与内置竖排花体铭牌) */
-.char-vcard-media{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  overflow: hidden;
-  background: #080514;
-  border-bottom: 1px solid rgba(192, 132, 252, 0.22);
-}
-
-.char-vcard-img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  transform: translateZ(0) scale(1.001);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  will-change: transform;
-  transition: transform 0.65s var(--ease-out-expo), filter 0.4s ease;
-}
-
-.char-vertical-card:hover .char-vcard-img{
-  transform: scale(1.04);
-}
-
-/* Bottom Info Box inside Vertical Card (图四下方角色简介) */
-.char-vcard-body{
-  padding: 22px 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-  background:
-    radial-gradient(circle at 90% 100%, rgba(192, 132, 252, 0.08), transparent 60%);
-}
-
-.char-vcard-eyebrow{
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-}
-
-.char-vcard-eyebrow.crimson{ color: var(--crimson-soft); }
-.char-vcard-eyebrow.lilac{ color: var(--lilac-bright); }
-.char-vcard-eyebrow.gold{ color: var(--gold-brass); }
-.char-vcard-eyebrow.emerald{ color: #34D399; }
-
-.char-vcard-title{
-  font-family: var(--font-serif);
-  font-size: 1.55rem;
-  font-weight: 800;
-  color: #fff;
-  line-height: 1.25;
-  margin: 2px 0 4px;
-}
-
-.char-vcard-summary{
-  font-size: 0.88rem;
-  color: var(--text-secondary);
-  line-height: 1.65;
-}
-
-.tag-crimson{ color: var(--crimson-soft); font-weight: 700; }
-.tag-lilac{ color: var(--lilac-bright); font-weight: 700; }
-.tag-gold{ color: var(--gold-brass); font-weight: 700; }
-.tag-emerald{ color: #34D399; font-weight: 700; }
-
-.char-vcard-tags{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.char-vcard-tags span{
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.045);
-  border: 1px solid rgba(192, 132, 252, 0.25);
-  color: var(--lilac-bright);
-}
-
-@keyframes charDetailFadeIn{
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Yesterday Has Not Yet Happened (《昨日尚未发生》) Interactive Prototype */
-.dungeon-prototype-grid{
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 36px;
-  align-items: center;
-  background: linear-gradient(145deg, rgba(20, 14, 44, 0.88), rgba(10, 7, 24, 0.95));
-  border: 1px solid var(--border-bright);
-  border-radius: var(--radius-xl);
-  padding: 36px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6);
-}
-
-/* 04页新版：3个 9:16 竖屏元素展示框 + 下方三级标题与 16:9 横屏展示框 */
-.dungeon-prototype-grid.three-vertical-frames{
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  align-items: stretch;
-  padding: 36px;
-}
-
-.dungeon-prototype-grid.three-vertical-frames .vertical-916-frame{
-  aspect-ratio: 9 / 18.2;
-}
-
-.dungeon-prototype-grid.three-vertical-frames .vertical-916-frame:hover .vertical-frame-img{
-  transform: none;
-}
-
-.vertical-916-frame{
-  position: relative;
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  border-radius: 22px;
-  overflow: hidden;
-  background: #080514;
-  border: 1px solid rgba(192, 132, 252, 0.36);
-  box-shadow:
-    0 20px 48px rgba(0, 0, 0, 0.65),
-    0 0 28px rgba(192, 132, 252, 0.14);
-  transition: transform 0.38s var(--ease-out-expo), border-color 0.35s ease, box-shadow 0.35s ease;
-}
-
-.vertical-916-frame::before{
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--crimson-core), var(--lilac-core), var(--gold-brass));
-  z-index: 3;
-}
-
-.vertical-916-frame:hover{
-  transform: translateY(-6px);
-  border-color: var(--crimson-core);
-  box-shadow:
-    0 26px 58px rgba(0, 0, 0, 0.78),
-    0 0 34px rgba(244, 63, 94, 0.28);
-}
-
-.vertical-frame-img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
-  display: block;
-  transition: transform 0.6s var(--ease-out-expo);
-}
-
-.vertical-916-frame:hover .vertical-frame-img{
-  transform: scale(1.04);
-}
-
-/* 04页下方：左侧 9:16《副本》展示图 + 右侧无底色透明 UI 副本介绍 */
-.dungeon-instance-showcase{
-  margin-top: 52px;
-  display: grid;
-  grid-template-columns: 360px 1fr;
-  gap: 56px;
-  align-items: center;
-  width: 100%;
-}
-
-.dungeon-instance-frame{
-  width: 100%;
-  max-width: 360px;
-}
-
-.dungeon-instance-floating-info{
-  position: relative;
-  z-index: 3;
-  max-width: 760px;
-  text-align: left;
-  background: none;
-  border: none;
-  box-shadow: none;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* ==========================================================================
    05. USER PERSONA, BENCHMARKS & COMMERCIALIZATION (用户画像 + 竞品海报画廊 + 商业化)
+
    ========================================================================== */
+
 /* Dual Numerical Rules Cards (洞察值 × 心契度) */
+
 .numeric-rules-grid{
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 20px;
+
   margin-bottom: 36px;
+
 }
 
 .numeric-rule-card{
+
   background: linear-gradient(135deg, rgba(22, 16, 48, 0.88), rgba(11, 8, 26, 0.95));
+
   border: 1px solid var(--border-bright);
+
   border-radius: var(--radius-lg);
+
   padding: 24px 28px;
+
   display: flex;
+
   align-items: center;
+
   gap: 22px;
+
   position: relative;
+
   overflow: hidden;
+
   transition: all 0.3s ease;
+
 }
 
 .numeric-rule-card:hover{
+
   transform: translateY(-3px);
+
   box-shadow: 0 14px 36px rgba(192, 132, 252, 0.22);
+
 }
 
 .numeric-rule-card.insight{
+
   border-left: 4px solid var(--lilac-core);
+
 }
 
 .numeric-rule-card.heartbond{
+
   border-left: 4px solid var(--crimson-core);
+
 }
 
 .numeric-orb{
+
   width: 68px;
+
   height: 68px;
+
   border-radius: 50%;
+
   flex-shrink: 0;
+
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
+
   justify-content: center;
+
   font-family: var(--font-serif);
+
   font-weight: 700;
+
   border: 1px solid rgba(255, 255, 255, 0.35);
+
 }
 
 .numeric-orb.insight{
+
   background: radial-gradient(circle at 30% 30%, #A855F7, #312E81);
+
   box-shadow: 0 0 24px rgba(168, 85, 247, 0.5);
+
 }
 
 .numeric-orb.heartbond{
+
   background: radial-gradient(circle at 30% 30%, #F43F5E, #881337);
+
   box-shadow: 0 0 24px rgba(244, 63, 94, 0.5);
+
 }
 
 /* 4-Poster Benchmark Visual Gallery (恋与深空 / 光与夜之恋 / 世界之外 / 夜幕之下) */
+
 .benchmark-posters-showcase{
+
   margin-top: 32px;
+
   margin-bottom: 36px;
+
 }
 
 .benchmark-posters-grid{
+
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 20px;
+
 }
 
 .bench-poster-card{
+
   background: linear-gradient(165deg, rgba(24, 17, 52, 0.9), rgba(10, 7, 24, 0.96));
+
   border: 1px solid var(--border-subtle);
+
   border-radius: var(--radius-md);
+
   overflow: hidden;
+
   display: flex;
+
   flex-direction: column;
+
   transition: all 0.35s var(--ease-out-expo);
+
   position: relative;
+
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.45);
+
 }
 
 .bench-poster-card:hover{
+
   transform: translateY(-6px);
+
   border-color: var(--crimson-core);
+
   box-shadow:
+
     0 20px 44px rgba(0, 0, 0, 0.7),
+
     0 0 28px rgba(244, 63, 94, 0.28);
+
 }
 
 .bench-poster-media{
+
   position: relative;
+
   width: 100%;
+
   aspect-ratio: 16 / 9;
+
   overflow: hidden;
+
   background: #080514;
+
   border-bottom: 1px solid var(--border-subtle);
+
 }
 
 .bench-poster-media img{
+
   width: 100%;
+
   height: 100%;
+
   object-fit: cover;
+
   transition: transform 0.6s var(--ease-out-expo), filter 0.4s ease;
+
 }
 
 .bench-poster-card:hover .bench-poster-media img{
+
   transform: scale(1.06);
+
 }
 
 .bench-poster-body{
+
   padding: 16px 18px 18px;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
+
   flex: 1;
+
   gap: 10px;
+
 }
 
 .bench-game-title{
+
   font-family: var(--font-serif);
+
   font-size: 1.15rem;
+
   font-weight: 700;
+
   color: #fff;
+
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
 }
 
 .bench-game-desc{
+
   font-size: 0.8rem;
+
   color: var(--text-secondary);
+
   line-height: 1.55;
+
 }
 
 .persona-benchmark-grid{
+
   display: grid;
+
   grid-template-columns: 1fr 1fr;
+
   gap: 28px;
+
   margin-bottom: 36px;
+
 }
 
 .glass-panel{
+
   background: var(--bg-card);
+
   border: 1px solid var(--border-subtle);
+
   border-radius: var(--radius-lg);
+
   padding: 28px;
+
   position: relative;
+
 }
 
 /* Bubble Constellation (Inspired by Valorant Mobile Pitch Deck ref-pitch-7.jpg) */
+
 .persona-bubble-stage{
+
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 12px;
+
   justify-content: center;
+
   align-items: center;
+
   padding: 22px;
+
   background: radial-gradient(circle at center, rgba(244, 63, 94, 0.18), rgba(15, 10, 34, 0.85));
+
   border: 1px dashed rgba(244, 63, 94, 0.4);
+
   border-radius: var(--radius-md);
+
   margin: 18px 0;
+
 }
 
 .persona-bubble{
+
   padding: 12px 18px;
+
   border-radius: 999px;
+
   background: rgba(20, 14, 44, 0.88);
+
   border: 1px solid var(--lilac-core);
+
   color: #fff;
+
   font-size: 0.84rem;
+
   font-weight: 600;
+
   box-shadow: 0 6px 20px rgba(192, 132, 252, 0.2);
+
   transition: all 0.25s ease;
+
 }
 
 .persona-bubble.core{
+
   background: linear-gradient(135deg, var(--crimson-core), var(--lilac-deep));
+
   font-size: 0.96rem;
+
   padding: 14px 24px;
+
   border-color: #fff;
+
 }
 
 .persona-bubble:hover{
+
   transform: scale(1.06);
+
   border-color: var(--crimson-soft);
+
 }
 
 /* Core Loop 5-Step Flow */
+
 .gameplay-loop-bar{
+
   display: grid;
+
   grid-template-columns: repeat(5, 1fr);
+
   gap: 12px;
+
   margin: 28px 0;
+
 }
 
 .loop-node{
+
   background: linear-gradient(145deg, rgba(28, 20, 58, 0.85), rgba(14, 10, 30, 0.92));
+
   border: 1px solid var(--border-bright);
+
   border-radius: var(--radius-md);
+
   padding: 18px 16px;
+
   text-align: center;
+
   position: relative;
+
 }
 
 /* ==========================================================================
+
    06. INTERFACE & GAMEPLAY REFERENCES (【界面/玩法参考】· 五大参考玩法矩阵)
+
    ========================================================================== */
+
 .section-subtitle-bold{
+
   font-family: var(--font-serif);
+
   font-size: clamp(1.75rem, 2.6vw, 2.3rem);
+
   font-weight: 900;
+
   color: #fff;
+
   letter-spacing: 0.06em;
+
   margin-top: 6px;
+
   text-shadow:
+
     0 2px 24px rgba(244, 63, 94, 0.42),
+
     0 0 36px rgba(192, 132, 252, 0.28);
+
 }
 
 .gameplay-ref-bento{
+
   display: grid;
+
   grid-template-columns: repeat(4, 1fr);
+
   gap: 20px;
+
   align-items: stretch;
+
 }
 
 .gp-ref-card{
+
   background: linear-gradient(165deg, rgba(22, 15, 48, 0.92), rgba(10, 7, 24, 0.96));
+
   border: 1px solid var(--border-subtle);
+
   border-radius: var(--radius-lg);
+
   overflow: hidden;
+
   display: flex;
+
   flex-direction: column;
+
   transition: all 0.36s var(--ease-out-expo);
+
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+
   position: relative;
+
 }
 
 .gp-ref-card::before{
+
   content: "";
+
   position: absolute;
+
   top: 0;
+
   left: 0;
+
   right: 0;
+
   height: 3px;
+
   background: linear-gradient(90deg, var(--crimson-core), var(--lilac-core), var(--gold-brass));
+
   opacity: 0.85;
+
   z-index: 3;
+
 }
 
 .gp-ref-card{
+
   cursor: pointer;
+
 }
 
 .gp-ref-card:hover{
+
   transform: translateY(-6px);
+
   border-color: var(--crimson-core);
+
   box-shadow:
+
     0 24px 56px rgba(0, 0, 0, 0.72),
+
     0 0 32px rgba(244, 63, 94, 0.25);
+
 }
 
 .gp-ref-media{
+
   position: relative;
+
   width: 100%;
+
   aspect-ratio: 16 / 10;
+
   overflow: hidden;
+
   background: #070512;
+
   border-bottom: 1px solid rgba(192, 132, 252, 0.22);
+
   cursor: pointer;
+
 }
 
 .gp-ref-media img{
+
   width: 100%;
+
   height: 100%;
+
   object-fit: cover;
+
   transition: transform 0.6s var(--ease-out-expo), filter 0.4s ease;
+
 }
 
 .gp-ref-card:hover .gp-ref-media img{
+
   transform: scale(1.04);
+
 }
 
 .gp-ref-index{
+
   position: absolute;
+
   top: 12px;
+
   left: 12px;
+
   z-index: 2;
+
   padding: 4px 12px;
+
   border-radius: 999px;
+
   font-family: var(--font-mono);
+
   font-size: 0.68rem;
+
   font-weight: 700;
+
   letter-spacing: 0.08em;
+
   background: rgba(8, 5, 20, 0.86);
+
   backdrop-filter: blur(8px);
+
 }
 
 .gp-ref-index.crimson{
+
   color: var(--crimson-soft);
+
   border: 1px solid rgba(244, 63, 94, 0.48);
+
 }
 
 .gp-ref-index.lilac{
+
   color: var(--lilac-bright);
+
   border: 1px solid rgba(192, 132, 252, 0.48);
+
 }
 
 .gp-ref-index.gold{
+
   color: var(--gold-brass);
+
   border: 1px solid rgba(229, 193, 88, 0.48);
+
 }
 
 .gp-ref-zoom-hint{
+
   position: absolute;
+
   bottom: 10px;
+
   right: 12px;
+
   z-index: 2;
+
   padding: 4px 10px;
+
   border-radius: 999px;
+
   font-family: var(--font-mono);
+
   font-size: 0.68rem;
+
   color: #fff;
+
   background: rgba(8, 5, 20, 0.78);
+
   border: 1px solid rgba(255, 255, 255, 0.22);
+
   backdrop-filter: blur(6px);
+
   opacity: 0;
+
   transform: translateY(4px);
+
   transition: all 0.28s ease;
+
 }
 
 .gp-ref-card:hover .gp-ref-zoom-hint{
+
   opacity: 1;
+
   transform: translateY(0);
+
 }
 
 .gp-ref-body{
+
   padding: 20px 22px 22px;
+
   display: flex;
+
   flex-direction: column;
+
   justify-content: space-between;
+
   gap: 14px;
+
   flex: 1;
+
 }
 
 .gp-ref-row{
+
   display: flex;
+
   flex-direction: column;
+
   gap: 6px;
+
 }
 
 .gp-ref-label{
+
   font-family: var(--font-mono);
+
   font-size: 0.72rem;
+
   font-weight: 700;
+
   letter-spacing: 0.1em;
+
 }
 
 .gp-ref-label.crimson{ color: var(--crimson-soft); }
+
 .gp-ref-label.lilac{ color: var(--lilac-bright); }
+
 .gp-ref-label.gold{ color: var(--gold-brass); }
 
 .gp-ref-title{
+
   font-family: var(--font-serif);
+
   font-size: 1.18rem;
+
   font-weight: 800;
+
   color: #fff;
+
   line-height: 1.45;
+
 }
 
 /* Lightbox Modal for Gameplay Reference Screenshots */
+
 .gp-lightbox-modal{
+
   position: fixed;
+
   inset: 0;
+
   z-index: 9999;
+
   display: flex;
+
   align-items: center;
+
   justify-content: center;
+
   padding: 28px;
+
 }
 
 .gp-lightbox-modal[hidden]{
+
   display: none !important;
+
 }
 
 .gp-lightbox-backdrop{
+
   position: absolute;
+
   inset: 0;
+
   background: rgba(5, 3, 14, 0.88);
+
   backdrop-filter: blur(12px);
+
 }
 
 .gp-lightbox-dialog{
+
   position: relative;
+
   z-index: 2;
+
   max-width: 1040px;
+
   width: 100%;
+
   background: linear-gradient(165deg, rgba(22, 15, 48, 0.98), rgba(9, 6, 22, 0.99));
+
   border: 1px solid var(--border-bright);
+
   border-radius: var(--radius-lg);
+
   padding: 18px;
+
   box-shadow: 0 32px 80px rgba(0, 0, 0, 0.85);
+
 }
 
 .gp-lightbox-dialog img,
+
 .gp-lightbox-dialog video{
+
   width: 100%;
+
   max-height: 74vh;
+
   object-fit: contain;
+
   border-radius: 10px;
+
   background: #060410;
+
   display: block;
+
   outline: none;
+
 }
 
 .gp-lightbox-close{
+
   position: absolute;
+
   top: 28px;
+
   right: 28px;
+
   z-index: 3;
+
   background: rgba(12, 8, 28, 0.88);
+
   border: 1px solid var(--crimson-core);
+
   color: #fff;
+
   font-size: 0.8rem;
+
   font-weight: 700;
+
   padding: 7px 16px;
+
   border-radius: 999px;
+
   cursor: pointer;
+
   transition: all 0.2s ease;
+
 }
 
 .gp-lightbox-close:hover{
+
   background: var(--crimson-core);
+
 }
 
 .gp-lightbox-meta{
+
   padding: 14px 8px 4px;
+
   display: flex;
+
   flex-wrap: wrap;
+
   justify-content: space-between;
+
   align-items: center;
+
   gap: 10px;
+
 }
 
 .gp-lightbox-title{
+
   font-family: var(--font-serif);
+
   font-size: 1.15rem;
+
   font-weight: 800;
+
   color: #fff;
+
 }
 
 /* Footer */
+
 .site-footer{
+
   border-top: 1px solid var(--border-subtle);
+
   background: rgba(6, 4, 15, 0.92);
+
   padding: 56px 28px;
+
   position: relative;
+
   z-index: 2;
+
 }
 
 .footer-inner{
+
   max-width: var(--max-width);
+
   margin: 0 auto;
+
   display: flex;
+
   flex-wrap: wrap;
+
   justify-content: space-between;
+
   align-items: center;
+
   gap: 24px;
+
 }
 
 /* ==========================================================================
+
    Mobile-First & High-End Responsive Architecture (移动端高定体验优先规范)
+
    ========================================================================== */
 
 /* 移动端专属组件基础（桌面端默认隐藏） */
+
 .mobile-bottom-nav,
+
 .mobile-char-tabs,
+
 .mobile-carousel-indicator,
+
 .mobile-frame-pills{
+
   display: none;
+
 }
 
 /* 平板 & 中屏适配 (<= 1080px) */
+
 @media (max-width: 1080px){
+
   .hero-grid,
+
   .realm-showcase-panel,
+
   .liuhuo-lab-stage,
+
   .char-editorial-main,
+
   .dungeon-prototype-grid,
+
   .dungeon-instance-showcase,
+
   .persona-benchmark-grid,
+
   .numeric-rules-grid{
+
     grid-template-columns: 1fr;
+
   }
+
   .gameplay-ref-bento{
+
     grid-template-columns: repeat(2, 1fr);
+
   }
+
   .worldview-stage-layout{
+
     flex-direction: column;
+
     align-items: flex-start;
+
     min-height: auto;
+
   }
+
   .heroine-floating-info{
+
     margin-right: 0;
+
     margin-bottom: 8px;
+
   }
+
   .lore-4-grid,
+
   .world-Realm-tabs,
+
   .char-cards-overview,
+
   .benchmark-posters-grid{
+
     grid-template-columns: repeat(2, 1fr);
+
   }
+
   .mainline-chain,
+
   .chapter-5-strip,
+
   .gameplay-loop-bar{
+
     grid-template-columns: repeat(2, 1fr);
+
   }
+
   .chain-arrow{
+
     display: none;
+
   }
+
   .nav-links{
+
     display: none;
+
   }
+
 }
 
 /* 移动端体验优先主断点 (<= 860px) */
+
 @media (max-width: 860px){
+
   /* 页面内边距：底部预留悬浮胶囊底栏空间 */
+
   .pitch-section{
+
     padding: 52px 16px 88px !important;
+
   }
 
   /* 00. HERO：复位桌面端为叠加背景题字设计的负向偏移。
+
      徽章(-105px)与主标题(-35px)是成对的，只复位其一会让两者压在一起 */
+
   .hero-badges,
+
   .hero-title{
+
     top: 0;
+
   }
+
   .site-footer{
+
     padding: 36px 16px 104px !important;
+
   }
 
   /* 顶部导航瘦身与微调 */
+
   .site-header{
+
     height: 58px;
+
   }
+
   .header-inner{
+
     padding: 0 16px;
+
   }
+
   .brand-sub{
+
     display: none;
+
   }
+
   .brand-name{
+
     font-size: 1.02rem;
+
   }
+
   #btn-deck-mode{
+
     display: none !important;
+
   }
 
   /* 移动端悬浮毛玻璃底栏 */
+
   .mobile-bottom-nav{
+
     display: flex;
+
     position: fixed;
+
     bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+
     left: 12px;
+
     right: 12px;
+
     height: 54px;
+
     z-index: 999;
+
     background: rgba(14, 10, 32, 0.88);
+
     backdrop-filter: blur(24px) saturate(190%);
+
     -webkit-backdrop-filter: blur(24px) saturate(190%);
+
     border: 1px solid rgba(192, 132, 252, 0.28);
+
     border-radius: 999px;
+
     box-shadow:
+
       0 16px 40px rgba(0, 0, 0, 0.82),
+
       0 0 24px rgba(244, 63, 94, 0.18);
+
     align-items: center;
+
     justify-content: space-around;
+
     padding: 4px 6px;
+
   }
 
   .mobile-nav-item{
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
+
     gap: 2px;
+
     text-decoration: none;
+
     color: var(--text-muted);
+
     padding: 4px 10px;
+
     border-radius: 999px;
+
     transition: all 0.22s var(--ease-out-expo);
+
     flex: 1;
+
     max-width: 58px;
+
   }
 
   .mobile-nav-item .m-nav-icon{
+
     font-size: 0.92rem;
+
     line-height: 1;
+
     filter: grayscale(0.4);
+
     transition: transform 0.22s ease, filter 0.22s ease;
+
   }
 
   .mobile-nav-item .m-nav-label{
+
     font-family: var(--font-sans);
+
     font-size: 0.65rem;
+
     font-weight: 600;
+
     letter-spacing: 0.04em;
+
     line-height: 1;
+
   }
 
   .mobile-nav-item.active{
+
     color: #fff;
+
     background: linear-gradient(135deg, rgba(244, 63, 94, 0.28), rgba(168, 85, 247, 0.25));
+
     border: 1px solid rgba(244, 63, 94, 0.45);
+
     box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+
   }
 
   .mobile-nav-item.active .m-nav-icon{
+
     filter: grayscale(0);
+
     transform: scale(1.15);
+
   }
+
 }
 
-/* 手机竖屏高定优化 (<= 640px) */
-@media (max-width: 640px){
-  /* 00. HERO 首页 */
+/* 手机竖屏高定优化 (<= 860px) */
+
+@media (max-width: 860px){
+
+  /* 00. HERO 首页：采用移动端专属高定海报 mobie_shouyetu.jpg */
+
+  .hero-bg-backdrop{
+
+    background-image: url("../assets/images/mobie_shouyetu.jpg") !important;
+
+    background-position: center center !important;
+
+    background-size: cover !important;
+    
+    opacity: 0.55 !important;
+
+  }
+
+  .hero-bg-backdrop::after{
+
+    background:
+
+      linear-gradient(180deg, rgba(8, 6, 18, 0.42) 0%, transparent 24%, transparent 60%, rgba(8, 6, 18, 0.82) 100%) !important;
+
+  }
+
   .hero-section{
-    min-height: 100svh;
-    padding-top: 72px !important;
-    padding-bottom: 24px !important;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+    min-height: 100svh !important;
+
+    height: 100svh !important;
+
+    padding: 68px 16px calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: space-between !important;
+
+    box-sizing: border-box !important;
+
+    position: relative !important;
+
+    overflow: hidden !important;
+
+  }
+
+  .hero-grid{
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    height: 100% !important;
+
+    width: 100% !important;
+
+    margin: 0 !important;
+
   }
 
   .hero-content{
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    justify-content: space-between !important;
+
+    align-items: center !important;
+
+    height: 100% !important;
+
+    width: 100% !important;
+
+    text-align: center !important;
+
+  }
+
+  /* 顶部徽章与大标题：置于上方晨曦晚霞天空 */
+
+  .hero-lead-group{
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+
+    width: 100% !important;
+
+    margin-top: 2px !important;
+
+    z-index: 2 !important;
+
   }
 
   .hero-badges{
-    justify-content: center;
-    gap: 6px;
-    margin-bottom: 12px;
-    width: 100%;
+
+    display: flex !important;
+
+    flex-wrap: wrap !important;
+
+    justify-content: center !important;
+
+    gap: 6px !important;
+
+    margin: 0 0 4px 0 !important;
+
+    top: 0 !important;
+
+    width: 100% !important;
+
   }
 
   .hero-badges .badge-tag{
-    font-size: 0.68rem;
-    padding: 4px 10px;
+
+    font-size: 0.68rem !important;
+
+    padding: 4px 10px !important;
+
+    background: rgba(14, 10, 32, 0.65) !important;
+
+    backdrop-filter: blur(10px) !important;
+
+    -webkit-backdrop-filter: blur(10px) !important;
+
+    border: 1px solid rgba(192, 132, 252, 0.35) !important;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4) !important;
+
   }
 
+  /* ==========================================================================
+     【核心控制参数：控制首页“雾绯”大标题字体大小】
+     在此处修改 font-size 即可自由缩放“雾绯”二字大小！
+     当前设定为：60px
+     ========================================================================== */
   .hero-title{
-    font-size: clamp(2.1rem, 9.5vw, 2.7rem) !important;
-    top: 0 !important;
-    margin-bottom: 4px !important;
-    letter-spacing: 0.08em;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 52px !important;
+    width: auto !important;
+    position: absolute !important;
+    top: 120px !important;
+    left: calc(50% + 14px) !important;
+    transform: translateX(-50%) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 2 !important;
+    pointer-events: none !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    filter: none !important;
   }
-  
 
-  /* 2x2 黄金比例体量指标卡片，避免竖向堆叠遮挡背景题字 */
+  .hero-title-char{
+    display: inline-block !important;
+    font-family: var(--font-serif) !important;
+    font-size: 70px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    /* 与PC端一致：白色微透紫柔和渐变与丁香幽光投影 */
+    background: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 48%, #F7F2FE 75%, #E9DAFC 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 2px 14px rgba(192, 132, 252, 0.45)) drop-shadow(0 6px 30px rgba(147, 51, 234, 0.25)) !important;
+  }
+
+  /* 核心 KPI 矩阵：按照用户绿色标记向上提升至中层书法题字正下方屋脊线位置 */
+
   .hero-kpi-grid{
+
     display: grid !important;
+
     grid-template-columns: repeat(2, 1fr) !important;
+
+    grid-template-rows: auto auto !important;
+
     gap: 8px !important;
-    width: 100% !important;
-    max-width: 360px !important;
+
+    width: calc(100% - 28px) !important;
+
+    max-width: 350px !important;
+
     margin: 0 auto !important;
-    top: 0 !important;
-    left: 0 !important;
+
+    position: absolute !important;
+
+    top: auto !important;
+
+    bottom: 122px !important;
+
+    left: 50% !important;
+
+    right: auto !important;
+
+    transform: translateX(-50%) !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    z-index: 3 !important;
+
   }
 
   .hero-kpi-grid .kpi-card{
-    padding: 10px 12px !important;
-    border-radius: 14px !important;
+
+    transform: translate(0.8px, 15px);
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    flex: none !important;
+
+    padding: 8px 10px !important;
+
+    border-radius: 12px !important;
+
     text-align: center !important;
-    background: rgba(14, 10, 32, 0.72) !important;
-    backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(192, 132, 252, 0.22) !important;
+
+    background: rgba(14, 10, 32, 0.82) !important;
+
+    backdrop-filter: blur(14px) !important;
+
+    -webkit-backdrop-filter: blur(14px) !important;
+
+    border: 1px solid rgba(192, 132, 252, 0.28) !important;
+
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+
   }
 
   .hero-kpi-grid .kpi-value{
+
     font-size: 1.25rem !important;
+
+    font-weight: 700 !important;
+
+    line-height: 1.15 !important;
+
   }
 
   .hero-kpi-grid .kpi-label{
-    font-size: 0.68rem !important;
+
+    font-size: 0.65rem !important;
+
     margin-top: 2px !important;
+
     color: var(--text-muted) !important;
+
+    white-space: nowrap !important;
+
   }
 
   /* 01. WORLDVIEW 世界观 */
+
   .world-Realm-tabs{
+
     display: grid !important;
+
     grid-template-columns: repeat(2, 1fr) !important;
+
     gap: 8px !important;
+
     width: 100% !important;
+
   }
 
   .realm-static-card{
+
     padding: 10px 10px !important;
+
     border-radius: 12px !important;
+
   }
 
   .realm-static-card::before{
+
     display: none !important;
+
   }
 
   .realm-tab-name{
+
     font-size: 0.95rem !important;
+
     line-height: 1.25 !important;
+
   }
 
   .realm-tab-sub{
+
     font-size: 0.68rem !important;
+
     line-height: 1.35 !important;
+
   }
+
   
 
   #worldview > .section-frosted-bg::before{
+
     background-image: url("../assets/images/nuzhu/20261026-mobile-heroine.png") !important;
+
     background-position: center top !important;
+
     background-size: cover !important;
+
     opacity: 0.88 !important;
+
     filter: saturate(1.1) brightness(1.02) !important;
+
   }
+
   #worldview > .section-frosted-bg::after{
+
     backdrop-filter: none !important;
+
     -webkit-backdrop-filter: none !important;
+
     background: linear-gradient(180deg, rgba(8,6,18,0.82) 0%, rgba(8,6,18,0.15) 20%, rgba(8,6,18,0.15) 75%, rgba(8,6,18,0.88) 100%) !important;
+
   }
 
   .worldview-stage-layout{
+
     position: relative !important;
+
     min-height: 440px !important;
+
     display: flex !important;
+
     flex-direction: column !important;
+
     justify-content: flex-start !important;
+
     margin-bottom: 24px !important;
+
   }
 
   .heroine-floating-info{
+
     width: 60% !important;
+
     max-width: 230px !important;
+
     padding: 0 !important;
+
     background: transparent !important;
+
     backdrop-filter: none !important;
+
     -webkit-backdrop-filter: none !important;
+
     border: none !important;
+
     border-radius: 0 !important;
+
     box-shadow: none !important;
+
     margin: 14px 0 10px 0 !important;
+
     text-align: left !important;
+
     z-index: 2 !important;
+
   }
 
   .heroine-floating-info .heroine-ui-eyebrow{
+
     font-size: 0.7rem !important;
+
     gap: 6px !important;
+
     margin-bottom: 6px !important;
+
   }
 
   .heroine-floating-info .heroine-ui-role{
+
     font-size: 1.55rem !important;
+
     margin-bottom: 6px !important;
+
     letter-spacing: 0.05em !important;
+
   }
 
   .heroine-floating-info .heroine-ui-line-text{
+
     font-size: 0.88rem !important;
+
     line-height: 1.55 !important;
+
     margin-bottom: 4px !important;
+
   }
 
   /* 主线链路转为移动端流畅横向滑动手势轴 */
+
   .mainline-chain{
+
     display: flex !important;
+
     overflow-x: auto !important;
+
     scroll-snap-type: x mandatory !important;
+
     -webkit-overflow-scrolling: touch !important;
+
     gap: 12px !important;
+
     padding: 4px 4px 16px !important;
+
     width: 100% !important;
+
   }
 
   .mainline-chain .chain-step{
+
     width: 78vw !important;
+
     max-width: 290px !important;
+
     flex-shrink: 0 !important;
+
     scroll-snap-align: start !important;
+
     margin: 0 !important;
+
     border-radius: 16px !important;
+
   }
 
   /* 02. CORE SETTINGS & 流火情绪实验室 */
+
   .lore-4-grid{
+
     display: grid !important;
+
     grid-template-columns: repeat(2, 1fr) !important;
+
     gap: 8px !important;
+
     width: 100% !important;
+
   }
 
   .lore-card{
+
     padding: 12px 14px !important;
+
     border-radius: 14px !important;
+
   }
 
   .lore-card h3{
+
     font-size: 1.12rem !important;
+
     margin: 6px 0 4px !important;
+
   }
 
   .lore-card p{
+
     font-size: 0.76rem !important;
+
     line-height: 1.55 !important;
+
   }
 
   /* 五种情绪图章等分一排，自适应微型图标不换行 */
+
   .emotion-selector-bar{
+
     display: grid !important;
+
     grid-template-columns: repeat(5, 1fr) !important;
+
     gap: 4px !important;
+
     width: 100% !important;
+
     padding: 0 !important;
+
     margin-top: 18px !important;
+
   }
 
   .emotion-orb-btn{
+
     padding: 4px 0 !important;
+
     display: flex !important;
+
     flex-direction: column !important;
+
     align-items: center !important;
+
     gap: 3px !important;
+
   }
 
   .emotion-emblem-img{
+
     width: 48px !important;
+
     height: 48px !important;
+
   }
 
   .emotion-orb-btn span{
+
     font-size: 0.64rem !important;
+
     white-space: nowrap !important;
+
     letter-spacing: 0 !important;
+
   }
 
   .emotion-spectrum-caption{
+
     margin-top: 14px !important;
+
     gap: 8px !important;
+
   }
 
   .emotion-spectrum-caption .caption-wing{
+
     max-width: 32px !important;
+
   }
 
   .emotion-spectrum-caption .caption-text{
+
     font-size: 0.85rem !important;
+
     line-height: 1.5 !important;
+
   }
 
   /* 03. CHARACTERS 男主矩阵：移动端画廊手势滑动与分段器 */
+
   .mobile-char-tabs{
+
     display: flex;
+
     gap: 8px;
+
     overflow-x: auto;
+
     -webkit-overflow-scrolling: touch;
+
     padding: 4px 2px 12px;
+
     margin-bottom: 6px;
+
     justify-content: center;
+
     width: 100%;
+
   }
 
   .mobile-char-tab{
+
     padding: 6px 14px;
+
     border-radius: 999px;
+
     font-size: 0.75rem;
+
     font-weight: 600;
+
     background: rgba(255, 255, 255, 0.05);
+
     border: 1px solid rgba(192, 132, 252, 0.25);
+
     color: var(--text-secondary);
+
     cursor: pointer;
+
     transition: all 0.22s ease;
+
     white-space: nowrap;
+
   }
 
   .mobile-char-tab.active{
+
     background: linear-gradient(135deg, var(--crimson-core), var(--lilac-core));
+
     color: #fff;
+
     border-color: rgba(255, 255, 255, 0.35);
+
     box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+
   }
 
   .char-cards-overview{
+
     display: flex !important;
+
     overflow-x: auto !important;
+
     scroll-snap-type: x mandatory !important;
+
     -webkit-overflow-scrolling: touch !important;
+
     gap: 14px !important;
+
     padding: 4px 12px 14px !important;
+
     width: 100% !important;
+
   }
 
   .char-vertical-card{
+
     width: 78vw !important;
+
     max-width: 295px !important;
+
     flex-shrink: 0 !important;
+
     scroll-snap-align: center !important;
+
     margin: 0 !important;
+
     border-radius: 20px !important;
+
   }
 
   .char-vcard-media{
+
     height: 380px !important;
+
+  }
+
+  /* 03. 男主立绘构图精修：圣子【伊莱亚】头部位置偏上，置顶居中以防人脸被裁切 */
+
+  .char-vertical-card[data-char="saint"] .char-vcard-img{
+
+    object-position: center top !important;
+
   }
 
   .mobile-carousel-indicator{
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     gap: 8px;
+
     margin-top: 6px;
+
   }
 
   .mobile-carousel-indicator .m-dot{
+
     width: 7px;
+
     height: 7px;
+
     border-radius: 50%;
+
     background: rgba(255, 255, 255, 0.22);
+
     transition: all 0.25s ease;
+
   }
 
   .mobile-carousel-indicator .m-dot.active{
+
     width: 20px;
+
     border-radius: 999px;
+
     background: var(--crimson-core);
+
     box-shadow: 0 0 10px var(--crimson-core);
+
   }
 
   /* 04. STORY & 3联实机展示屏：移动端全景画幅手势滑动 */
+
   .numeric-rules-grid{
+
     display: grid !important;
+
     grid-template-columns: repeat(2, 1fr) !important;
+
     gap: 10px !important;
+
     margin-bottom: 20px !important;
+
   }
 
   .numeric-rule-card{
+
     display: flex !important;
+
     flex-direction: column !important;
+
     align-items: flex-start !important;
+
     padding: 14px 12px !important;
+
     gap: 6px !important;
+
     border-radius: 14px !important;
+
     background: linear-gradient(145deg, rgba(26, 18, 54, 0.95), rgba(13, 9, 30, 0.98)) !important;
+
   }
 
   .numeric-rule-card .numeric-orb{
+
     display: none !important;
+
   }
 
   .numeric-rule-card .badge-tag{
+
     display: inline-block !important;
+
     font-size: 0.64rem !important;
+
     padding: 3px 8px !important;
+
     border-radius: 6px !important;
+
     margin-bottom: 4px !important;
+
     white-space: nowrap !important;
+
     line-height: 1.2 !important;
+
   }
 
   .numeric-rule-card h4{
+
     font-size: 0.96rem !important;
+
     margin: 0 !important;
+
     line-height: 1.35 !important;
+
     white-space: nowrap !important;
+
     color: #fff !important;
+
   }
 
   .numeric-rule-card [style*="font-family:var(--font-mono)"]{
+
     display: none !important;
+
   }
 
   /* 三联实机框在移动端升级为原生横向滑动 Showcase，保证 100% 清晰度 */
+
   .dungeon-prototype-grid.three-vertical-frames{
+
     display: flex !important;
+
     overflow-x: auto !important;
+
     scroll-snap-type: x mandatory !important;
+
     -webkit-overflow-scrolling: touch !important;
+
     gap: 14px !important;
+
     padding: 6px 12px 14px !important;
+
     width: 100% !important;
+
     border: none !important;
+
     background: transparent !important;
+
     box-shadow: none !important;
+
   }
 
   .dungeon-prototype-grid.three-vertical-frames .vertical-916-frame{
+
     width: 76vw !important;
+
     max-width: 285px !important;
+
     flex-shrink: 0 !important;
+
     scroll-snap-align: center !important;
+
     aspect-ratio: 9 / 18.2 !important;
+
   }
 
   .mobile-frame-pills{
+
     display: flex;
+
     justify-content: center;
+
     gap: 6px;
+
     margin: 4px 0 24px;
+
     width: 100%;
+
   }
 
   .mobile-frame-pills .m-frame-pill{
+
     padding: 5px 11px;
+
     border-radius: 999px;
+
     font-size: 0.7rem;
+
     font-weight: 600;
+
     background: rgba(255, 255, 255, 0.05);
+
     border: 1px solid rgba(192, 132, 252, 0.25);
+
     color: var(--text-secondary);
+
     cursor: pointer;
+
     transition: all 0.22s ease;
+
   }
 
   .mobile-frame-pills .m-frame-pill.active{
+
     background: linear-gradient(135deg, var(--crimson-core), var(--lilac-core));
+
     color: #fff;
+
     border-color: rgba(255, 255, 255, 0.4);
+
     box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+
   }
 
   .dungeon-instance-showcase{
+
     grid-template-columns: 1fr !important;
+
     gap: 20px !important;
+
     margin-top: 24px !important;
+
   }
 
   .dungeon-instance-frame{
+
     max-width: 250px !important;
+
     margin: 0 auto !important;
+
   }
 
   .dungeon-instance-floating-info{
+
     text-align: left !important;
+
     background: rgba(18, 12, 42, 0.65) !important;
+
     border: 1px solid rgba(192, 132, 252, 0.22) !important;
+
     border-radius: 16px !important;
+
     padding: 16px 14px !important;
+
     backdrop-filter: blur(12px) !important;
+
     width: 100% !important;
+
     box-sizing: border-box !important;
+
   }
 
   .dungeon-instance-floating-info .heroine-ui-eyebrow{
+
     justify-content: flex-start !important;
+
   }
 
-  /* 05. MARKET & 商业化五步闭环 */
-  .gameplay-loop-bar{
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 10px !important;
-    padding: 4px 4px 14px !important;
-  }
-
-  .gameplay-loop-bar .loop-node{
-    width: 70vw !important;
-    max-width: 260px !important;
-    flex-shrink: 0 !important;
-    scroll-snap-align: start !important;
-    border-radius: 14px !important;
-  }
-
-  .benchmark-posters-grid{
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 8px !important;
-  }
-
-  .bench-poster-card{
-    border-radius: 12px !important;
-  }
-
-  .bench-poster-body{
-    padding: 12px 10px 14px !important;
-    gap: 6px !important;
-  }
-
-  .bench-game-title{
+  /* 04 移动端标题排版：将《昨日尚未发生》换到第二行在“副本：其一”正下方，字体稍小2号 */
+  .dungeon-instance-floating-info .dungeon-ui-title{
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
+    gap: 4px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .dungeon-instance-floating-info .dungeon-title-prefix{
+    font-size: 1.35rem !important;
+    font-weight: 900 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .dungeon-instance-floating-info .dungeon-title-name{
+    font-size: 1.15rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* 05. MARKET & 商业化五步闭环 */
+
+  .gameplay-loop-bar{
+
+    display: flex !important;
+
+    overflow-x: auto !important;
+
+    scroll-snap-type: x mandatory !important;
+
+    -webkit-overflow-scrolling: touch !important;
+
+    gap: 10px !important;
+
+    padding: 4px 4px 14px !important;
+
+  }
+
+  .gameplay-loop-bar .loop-node{
+
+    width: 70vw !important;
+
+    max-width: 260px !important;
+
+    flex-shrink: 0 !important;
+
+    scroll-snap-align: start !important;
+
+    border-radius: 14px !important;
+
+  }
+
+  .benchmark-posters-grid{
+
+    display: grid !important;
+
+    grid-template-columns: repeat(2, 1fr) !important;
+
+    gap: 8px !important;
+
+  }
+
+  .bench-poster-card{
+
+    border-radius: 12px !important;
+
+  }
+
+  .bench-poster-body{
+
+    padding: 12px 10px 14px !important;
+
+    gap: 6px !important;
+
+  }
+
+  .bench-game-title{
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: flex-start !important;
+
     gap: 3px !important;
+
   }
 
   .bench-game-title > span:first-child{
+
     font-size: 0.98rem !important;
+
     white-space: nowrap !important;
+
     line-height: 1.25 !important;
+
     color: #fff !important;
+
     display: block !important;
+
     width: 100% !important;
+
   }
 
   .bench-game-title > span:last-child{
+
     font-size: 0.72rem !important;
+
     white-space: nowrap !important;
+
     line-height: 1.2 !important;
+
     display: block !important;
+
   }
 
   .bench-game-desc{
+
     font-size: 0.74rem !important;
+
     line-height: 1.45 !important;
+
   }
+
   
 
-  /* 06. GAMEPLAY 玩法与界面参考 */
+  /* 06. GAMEPLAY 玩法与界面参考：移动端防止标题遮挡 GIF 动图 */
+
   .gameplay-ref-bento{
+
     display: grid !important;
+
     grid-template-columns: repeat(2, 1fr) !important;
+
     gap: 8px !important;
+
   }
 
   .gp-ref-card{
+
     border-radius: 14px !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    overflow: hidden !important;
+
+  }
+
+  /* 将媒体容器转为垂直流布局，解除绝对定位覆盖，让标题置于动图上方独立展示，动图100%无遮挡 */
+
+  .gp-ref-media{
+
+    aspect-ratio: auto !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    position: relative !important;
+
+  }
+
+  .gp-ref-index{
+    position: static !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 28px !important;
+    width: 100% !important;
+    padding: 5px 4px !important;
+    border-radius: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(192, 132, 252, 0.22) !important;
+    background: rgba(12, 8, 28, 0.95) !important;
+    font-size: 0.62rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    white-space: normal !important;
+    line-height: 1.25 !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
+  .gp-ref-index.crimson{
+
+    color: var(--crimson-soft) !important;
+
+    border-bottom-color: rgba(244, 63, 94, 0.35) !important;
+
+  }
+
+  .gp-ref-index.lilac{
+
+    color: var(--lilac-bright) !important;
+
+    border-bottom-color: rgba(192, 132, 252, 0.35) !important;
+
+  }
+
+  .gp-ref-index.gold{
+
+    color: var(--gold-brass) !important;
+
+    border-bottom-color: rgba(251, 191, 36, 0.35) !important;
+
+  }
+
+  .gp-ref-media img{
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    aspect-ratio: 16 / 10 !important;
+
+    object-fit: cover !important;
+
+    display: block !important;
+
+  }
+
+  .gp-ref-zoom-hint{
+
+    font-size: 0.6rem !important;
+
+    padding: 2px 6px !important;
+
+    bottom: 6px !important;
+
+    right: 6px !important;
+
+  }
+
+  .gp-ref-body{
+
+    padding: 10px 10px 12px !important;
+
+    gap: 8px !important;
+
   }
 
   .gp-ref-title{
+
     font-size: 0.76rem !important;
+
     line-height: 1.4 !important;
+
   }
 
   .gp-ref-label{
+
     font-size: 0.65rem !important;
+
   }
 
   /* Lightbox 弹窗移动端沉浸体验 */
+
   .gp-lightbox-modal{
+
     padding: 12px !important;
+
   }
 
   .gp-lightbox-dialog{
+
     padding: 12px !important;
+
     border-radius: 16px !important;
+
   }
 
   .gp-lightbox-close{
+
     top: 18px !important;
+
     right: 18px !important;
+
     padding: 5px 12px !important;
+
     font-size: 0.72rem !important;
+
   }
 
   /* 通用排版调整 */
+
   .section-header{
+
     margin-bottom: 24px;
+
   }
 
   .section-title{
+
     font-size: clamp(1.4rem, 6vw, 1.85rem) !important;
+
   }
 
   .section-desc{
+
     font-size: 0.85rem !important;
+
   }
+
 }
 
 @media print{
+
   .site-header,
+
   .mobile-bottom-nav,
+
   #mist-canvas,
+
   .astrolabe-bg-ring{
+
     display: none !important;
+
   }
+
   body, html{
+
     background: #0B081C !important;
+
     color: #fff !important;
+
   }
+
   .pitch-section{
+
     page-break-inside: avoid;
+
     padding: 36px 16px;
+
   }
+
 }
+
